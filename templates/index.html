@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>GMM-GoodiesMoreMarket </title>
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            background-image: url(../static/img/bg.jpg);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+        .container {
+            border: 1px solid;
+            border-color: bisque;
+            border-radius: 25px;
+            box-shadow: 2px 1px 1px gray;
+            width: 450px;
+            height: 250px;
+            margin: 0 auto;
+            margin-top: 10px;
+            background: rgba(107, 65, 1, 0.85)
+        }
+        form {
+            margin-top: 30px;
+        }
+        label {
+            color: rgb(238, 153, 34);
+        }
+        .btn {
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            width: 100px;
+        }
+        .logo {
+            display: block;
+            width: 140px;
+            margin: 0 auto;
+            margin-top: 10%;
+            border-radius: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="../static/img/logo.png" class="logo" alt="">
+    <div class="container">
+        <div style="margin-top: 30px;">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input class="form-control" id="username" placeholder="Enter your username ">
+            </div>
+            <div class="form-group ">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password ">
+            </div>
+
+            <button class="btn btn-warning" id="login">Login</button>
+            <p id="register" class="text-muted  text-right"><u>click here to register</u></p>
+        </div>
+
+    </div>
+
+    <script>
+        $('#register').mouseover(function(){
+            $(this).css('cursor','pointer')
+        })
+        $('#register').click(function(){
+            window.location.href = '/register';
+        })
+        $('#login').click(function (){
+            var _username = $('#username').val();
+            var _password = $('#password').val();
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/login',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({ username: _username, password: _password }),
+                success: function (res) {
+                    console.log(res);
+                   
+                    if (res['response_code'] == 0) {
+                        
+                        window.location.href = 'home'
+                    }
+                    else if(res['response_code'] == 1) {
+                        alert("User doesn't exist!!");
+                    }
+                    else{
+                        alert("Wrong password!");
+                    }
+                }
+            })
+        })
+        $('body').keydown(function(e) {
+            if(e.keyCode=='13') {
+                $('#login').click();
+            }
+        })
+    </script>
+</body>
+
+</html>
