@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="GMM@10.128.202.15">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.8">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.7">
     <root id="1">
-      <ServerVersion>8.0.18</ServerVersion>
-      <DefaultEngine>InnoDB</DefaultEngine>
-      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
       <DefaultCasing>lower/lower</DefaultCasing>
     </root>
     <schema id="2" parent="1" name="gmm">
@@ -1112,61 +1109,67 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="279" parent="2" name="goods"/>
-    <table id="280" parent="2" name="orders"/>
-    <table id="281" parent="2" name="requests"/>
-    <table id="282" parent="2" name="users"/>
+    <table id="279" parent="2" name="goods">
+      <Engine>InnoDB</Engine>
+    </table>
+    <table id="280" parent="2" name="orders">
+      <Engine>InnoDB</Engine>
+    </table>
+    <table id="281" parent="2" name="requests">
+      <Engine>InnoDB</Engine>
+    </table>
+    <table id="282" parent="2" name="users">
+      <Engine>InnoDB</Engine>
+    </table>
     <column id="283" parent="279" name="goodsid">
       <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="284" parent="279" name="sold">
       <Position>2</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="285" parent="279" name="type">
       <Position>3</Position>
-      <DataType>varchar(45)|0s</DataType>
+      <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="286" parent="279" name="description">
       <Position>4</Position>
-      <DataType>varchar(80)|0s</DataType>
+      <DataType>varchar(80)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="287" parent="279" name="comment">
       <Position>5</Position>
-      <DataType>varchar(80)|0s</DataType>
+      <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="288" parent="279" name="price">
       <Position>6</Position>
-      <DataType>int(10) unsigned|0s</DataType>
+      <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="289" parent="279" name="seller">
       <Position>7</Position>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="290" parent="279" name="goodsid_UNIQUE">
       <ColNames>goodsid</ColNames>
       <Unique>1</Unique>
-      <Type>btree</Type>
     </index>
     <index id="291" parent="279" name="sell">
       <ColNames>seller</ColNames>
-      <Type>btree</Type>
     </index>
     <key id="292" parent="279" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
@@ -1185,41 +1188,38 @@
     </foreign-key>
     <column id="295" parent="280" name="orderid">
       <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="296" parent="280" name="goodsid">
       <Position>2</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="297" parent="280" name="buyer">
       <Position>3</Position>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="298" parent="280" name="time">
       <Position>4</Position>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="299" parent="280" name="orderid_UNIQUE">
       <ColNames>orderid</ColNames>
       <Unique>1</Unique>
-      <Type>btree</Type>
     </index>
     <index id="300" parent="280" name="good">
       <ColNames>goodsid</ColNames>
-      <Type>btree</Type>
     </index>
     <index id="301" parent="280" name="buy">
       <ColNames>buyer</ColNames>
-      <Type>btree</Type>
     </index>
     <key id="302" parent="280" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
@@ -1244,50 +1244,48 @@
     </foreign-key>
     <column id="306" parent="281" name="idrequests">
       <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="307" parent="281" name="username">
       <Position>2</Position>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="308" parent="281" name="password">
       <Position>3</Position>
-      <DataType>varchar(45)|0s</DataType>
+      <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="309" parent="281" name="nickname">
       <Position>4</Position>
-      <DataType>varchar(45)|0s</DataType>
+      <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="310" parent="281" name="phone">
       <Position>5</Position>
-      <DataType>varchar(15)|0s</DataType>
+      <DataType>varchar(15)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="311" parent="281" name="gender">
       <Position>6</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="312" parent="281" name="idrequests_UNIQUE">
       <ColNames>idrequests</ColNames>
       <Unique>1</Unique>
-      <Type>btree</Type>
     </index>
     <index id="313" parent="281" name="username_UNIQUE">
       <ColNames>username</ColNames>
       <Unique>1</Unique>
-      <Type>btree</Type>
     </index>
     <key id="314" parent="281" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
@@ -1304,44 +1302,43 @@
     </key>
     <column id="317" parent="282" name="username">
       <Position>1</Position>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="318" parent="282" name="password">
       <Position>2</Position>
-      <DataType>varchar(50)|0s</DataType>
+      <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="319" parent="282" name="authority">
       <Position>3</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="320" parent="282" name="nickname">
       <Position>4</Position>
-      <DataType>varchar(50)|0s</DataType>
+      <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="321" parent="282" name="phone">
       <Position>5</Position>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="322" parent="282" name="gender">
       <Position>6</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="323" parent="282" name="username_UNIQUE">
       <ColNames>username</ColNames>
       <Unique>1</Unique>
-      <Type>btree</Type>
     </index>
     <key id="324" parent="282" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>

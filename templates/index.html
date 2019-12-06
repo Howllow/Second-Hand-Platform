@@ -75,7 +75,7 @@
             $(this).css('cursor','pointer')
         })
         $('#register').click(function(){
-            window.location.href = '/register';
+            window.location.href = './register.html';
         })
         $('#login').click(function (){
             var _username = $('#username').val();
@@ -89,12 +89,17 @@
                 success: function (res) {
                     console.log(res);
                    
-                    if (res['response_code'] == 0) {
-                        
-                        window.location.href = 'home'
+                    if (res['response_code'] == 0){
+                        if (res['ident'] == 0)
+                            window.location.href = 'buyer_home';
+                        else if (res['ident'] == 1)
+                            window.location.href = 'seller_home';
+                        else
+                            window.location.href = 'admin_home';
+
                     }
                     else if(res['response_code'] == 1) {
-                        alert("User doesn't exist!!");
+                        alert("User doesn't exist or Seller hasn't been verified!!");
                     }
                     else{
                         alert("Wrong password!");
