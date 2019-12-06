@@ -62,3 +62,9 @@ def register():
             data['ident'] = 1
         res = dict()
         reg_message = register_user(data, db)
+
+        res['response_code'] = reg_message['state']
+
+        return json.dumps(res)
+
+
