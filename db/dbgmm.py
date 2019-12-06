@@ -60,7 +60,7 @@ def login_user(data: Dict[str, str], conn: Connection):
 
 
 
-def register_user(data: Dict[str, str, str, int, str, int], conn: Connection):
+def register_user(data: dict, conn: Connection):
     """
         :param data:
             python dictionary, containing keys as follows:

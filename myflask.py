@@ -15,7 +15,7 @@ login_manager.session_protection = 'strong'
 app.config['SECRET_KEY'] = 'gimmemoney'
 
 password = ""
-db = pymysql.connect(**config)
+db = pymysql.connect(**myconfig)
 
 @app.route('/')
 def homepage():
@@ -45,7 +45,7 @@ def login():
 
         return json.dumps(res)
 
-@app.route('register', methods=['POST', 'GET'])
+@app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'GET':
         return render_template('register.html')
