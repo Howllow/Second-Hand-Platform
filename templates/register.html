@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>GoodiesMoreMarket </title>
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            background-image: url(../static/img/bg.jpg);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+        .container {
+            border: 1px solid;
+            border-color: bisque;
+            border-radius: 25px;
+            box-shadow: 2px 1px 1px gray;
+            width: 450px;
+            height: 600px;
+            margin: 0 auto;
+            margin-top: 5px;
+            background: rgba(107, 65, 1, 0.85);
+        }
+        form {
+            margin-top: 30px;
+        }
+        label {
+            color: rgb(238, 153, 34);
+        }
+        .btn {
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            width: 100px;
+        }
+        .logo {
+            display: block;
+            width: 140px;
+            margin: 0 auto;
+            margin-top: 5%;
+            border-radius: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="../static/img/logo.png" class="logo" alt="">
+    <div class="container">
+        <div style="margin-top: 30px;">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input class="form-control" id="username" placeholder="Enter your username ">
+            </div>
+            <div class="form-group ">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password1" placeholder="Password ">
+            </div>
+            <div class="form-group ">
+                <label for="password">Reapeat Your Password</label>
+                <input type="password" class="form-control" id="password2" placeholder="Repeat Your Password ">
+            </div>
+            <div class="form-group">
+                <label for="nickname">Nickname</label>
+                <input class="form-control" id="nickname" placeholder="Enter your Nickname">
+            </div>
+            <div class="form-group ">
+                <label for="phone">Phone Number</label>
+                <input class="form-control" id="phone" placeholder="Phone Number">
+            </div>
+            <div class="form-group ">
+                <label for="gender">Gender</label>
+                <input class="form-control" id="gender" placeholder="M for Male, F for female">
+            </div>
+            <div class="form-group ">
+                    <label for="ident">Identity</label>
+                    <input class="form-control" id="ident" placeholder="S for seller, B for buyer">
+            </div>
+            
+
+            <button class="btn btn-warning" id="register">Register</button>
+        </div>
+
+    </div>
+
+    <script>
+        $('#register').click(function(){
+            var _username = $('#username').val();
+            var _password1 = $('#password1').val();
+            var _password2 = $('#password2').val();
+            var _nickname = $('#nickname').val();
+            var _phone = $('#phone').val();
+            var _gender = $('#gender').val();
+            var _ident = $('#ident').val();
+            if (_username == "" || "null") {alert("Username can't be null!!");}
+            else if (_password1 == "" || "null") {alert("Password can't be null!!");}
+            else if (_nickname == "" || "null") {alert("Nickname can't be null!!");}
+            else if (_phone == "" || "null") {alert("Phonenum can't be null!!");}
+            
+            if (_password1 != _password2) {
+                alert("Didn't repeat the same password!");
+            }
+            else if (_gender != 'F' && _gender != 'M') {
+                alert("Gender Wrong!! F for Female and M for Male!");
+            }
+            else if (_ident != 'S' && _ident != 'B') {
+                alert("Identity Wrong!! S for Seller and B for Buyer")
+            }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:5000/register',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify({ username: _username, password: _password , nickname: _nickname, 
+                                            gender: _gender, phone: _phone, ident: _ident}),
+                    success: function (res) {
+                        console.log(res);
+                        if (res['response_code'] == 0) {
+                            window.location.href = 'login';
+                        }
+                        else if(res['response_code'] == 1) {
+                            alert('Username already exists!');
+                        }
+                        else {
+                            alert("Nickname already exists!");
+                        }
+                    }
+                })
+            }
+
+        })
+        $('body').keydown(function(e) {
+            if(e.keyCode=='13') {
+                $('#register').click();
+            }
+        })
+    </script>
+</body>
+
+</html>
