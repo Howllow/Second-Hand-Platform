@@ -27,7 +27,7 @@
             border-radius: 25px;
             box-shadow: 2px 1px 1px gray;
             width: 450px;
-            height: 600px;
+            height: 670px;
             margin: 0 auto;
             margin-top: 5px;
             background: rgba(107, 65, 1, 0.85);
@@ -48,7 +48,6 @@
             display: block;
             width: 140px;
             margin: 0 auto;
-            margin-top: 5%;
             border-radius: 60px;
         }
     </style>
@@ -86,6 +85,10 @@
                     <label for="ident">Identity</label>
                     <input class="form-control" id="ident" placeholder="S for seller, B for buyer">
             </div>
+            <div class="form-group ">
+                    <label for="ident">Age</label>
+                    <input class="form-control" id="age" placeholder="Age, 5-100">
+            </div>
             
 
             <button class="btn btn-warning" id="register">Register</button>
@@ -102,10 +105,12 @@
             var _phone = $('#phone').val();
             var _gender = $('#gender').val();
             var _ident = $('#ident').val();
+            var _age = $('#age').val();
             if (_username == "" || _username == "null") {alert("Username can't be null!!");}
             else if (_password1 == "" || _password1 == "null") {alert("Password can't be null!!");}
             else if (_nickname == "" || _nickname == "null") {alert("Nickname can't be null!!");}
             else if (_phone == "" || _phone == "null") {alert("Phonenum can't be null!!");}
+            else if (_age == "" || age == "null") {alert("Age can't be null!!");}
             
             if (_password1 != _password2) {
                 alert("Didn't repeat the same password!");
@@ -114,7 +119,10 @@
                 alert("Gender Wrong!! F for Female and M for Male!");
             }
             else if (_ident != 'S' && _ident != 'B') {
-                alert("Identity Wrong!! S for Seller and B for Buyer")
+                alert("Identity Wrong!! S for Seller and B for Buyer");
+            }
+            else if (!(_age >= 5 && _age <= 100)) {
+                alert("Age Wrong!! You can't buy online at such age");
             }
             else {
                 $.ajax({
@@ -122,8 +130,8 @@
                     url: 'http://localhost:5000/register',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    data: JSON.stringify({ username: _username, password: _password , nickname: _nickname, 
-                                            gender: _gender, phone: _phone, ident: _ident}),
+                    data: JSON.stringify({ username: _username, password: _password1 , nickname: _nickname,
+                                            gender: _gender, phone: _phone, ident: _ident, age: _age}),
                     success: function (res) {
                         console.log(res);
                         if (res['response_code'] == 0) {

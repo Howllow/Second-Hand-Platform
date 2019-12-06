@@ -19,7 +19,7 @@ db = pymysql.connect(**myconfig)
 
 @app.route('/')
 def homepage():
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -51,6 +51,7 @@ def register():
         return render_template('register.html')
 
     elif request.method == 'POST':
+        print("1")
         data = request.get_json()
         if data['gender'] == 'M':
             data['gender'] = 0
@@ -67,4 +68,6 @@ def register():
 
         return json.dumps(res)
 
+if __name__ == '__main__':
+    app.run(host='localhost', port='5000')
 

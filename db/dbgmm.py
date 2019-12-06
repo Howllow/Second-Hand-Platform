@@ -84,18 +84,18 @@ def register_user(data: dict, conn: Connection):
 
     reg_message = dict()
 
-    if not check(['username', 'password', 'nickname', 'gender', 'phone', 'indent'], data, 'register'):
+    if not check(['username', 'password', 'nickname', 'gender', 'phone', 'ident', 'age'], data, 'register'):
         reg_message['state'] = 3
         return reg_message
 
     cursor = conn.cursor()
 
-    sql = 'select username from user'
+    sql = 'select username from users'
     cursor.execute(sql)
     rows = cursor.fetchall()
     usernames = [row[0] for row in rows]
 
-    sql = 'select nickname from user'
+    sql = 'select nickname from users'
     cursor.execute(sql)
     rows = cursor.fetchall()
     nicknames = [row[0] for row in rows]
@@ -114,25 +114,25 @@ def register_user(data: dict, conn: Connection):
             reg_message['state'] = 2
             return reg_message
 
-    if data['indent'] == 0:
-        sql = F"insert into users (username, password, nickname, gender, phone, authority)" \
+    if data['ident'] == 0:
+        sql = F"insert into users (username, password, nickname, gender, phone, authority, age)" \
               F" VALUE ('{data['username']}', '{data['password']}', '{data['nickname']}', '{data['gender']}', "\
-              F"'{data['phone']}', '{data['indent']}');"
+              F"'{data['phone']}', '{data['ident']}', '{data['age']}');"
         cursor.execute(sql)
 
         conn.commit()
         cursor.close()
 
-    elif data['indent'] == 1:
-        sql = F"insert into requests (username, password, nickname, gender, phone, authority)" \
+    elif data['ident'] == 1:
+        sql = F"insert into requests (username, password, nickname, gender, phone, age)" \
               F" VALUE ('{data['username']}', '{data['password']}', '{data['nickname']}', '{data['gender']}', " \
-              F"'{data['phone']}', '{data['indent']}');"
+              F"'{data['phone']}', '{data['age']}');"
         cursor.execute(sql)
 
         conn.commit()
         cursor.close()
 
-    logging.debug(F'register for account {data["account"]} succeeded')
+    logging.debug(F'register for account {data["username"]} succeeded')
     reg_message['state'] = 0
     return reg_message
 
