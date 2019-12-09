@@ -11,28 +11,39 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>GoodiesMoreMarket </title>
     <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-image: url(../static/img/welcome2.jpg);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
         html {
             width: 100%;
             height: 100%;
-        }
-        body {
-            padding-top: 60px;
-            height: 100%;
-            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-logo {
-            height: 60px;
+            height: 80px;
             width: 80px;
             margin-left: 10px;
         }
+
         .container-nav {
             display: flex;
             width: 100%;
-            height: 60px;
+            height: 80px;
             justify-content: flex-start;
             align-items: center;
+            font-family:"Arial Black";
+            font-size: medium;
         }
+
 
     </style>
 </head>
@@ -50,15 +61,15 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/search/goods">Goods</a></li>
+                            <li><a href="/buyer/goods">Goods</a></li>
                             <li class="divider"></li>
-                            <li><a href="/search/tuhao">Tuhao Buyer</a></li>
+                            <li><a href="/buyer/tuhao">Tuhao Buyer</a></li>
                             <li class="divider"></li>
-                            <li><a href="/search/hotseller">Hot Seller</a></li>
+                            <li><a href="/buyer/hotseller">Hot Seller</a></li>
                             <li class="divider"></li>
-                            <li><a href="/search/similar">Similar Buyer</a></li>
+                            <li><a href="/buyer/similar">Similar Buyer</a></li>
                             <li class="divider"></li>
-                            <li><a href="/search/audience">Seller Audience</a></li>
+                            <li><a href="/buyer/audience">Seller Audience</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -80,6 +91,5 @@
             </div>
         </div>
     </nav>
-
 </body>
 </html>

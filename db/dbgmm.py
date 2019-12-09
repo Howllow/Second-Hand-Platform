@@ -38,21 +38,21 @@ def login_user(data: Dict[str, str], conn: Connection):
         log_message['state'] = 1
         return log_message
 
-    sql = "select password from users where username = '{data['username']'};"
+    sql = F"select password from users where username = '{data['username']}';"
     cursor.execute(sql)
     real_pwd = cursor.fetchall()[0][0]
 
 
     if real_pwd != data['password']:
         cursor.close()
-        logging.debug(F'login for account {data["account"]} wrong password')
+        logging.debug(F'login for account {data["username"]} wrong password')
         log_message['state'] = 2
         return log_message
 
     else:
-        logging.debug(F'login for account {data["account"]} succeeded')
+        logging.debug(F'login for account {data["username"]} succeeded')
         log_message['state'] = 0
-        sql = "select authority from users where username = '{data['username']';"
+        sql = F"select authority from users where username = '{data['username']}';"
         cursor.execute(sql)
         log_message['ident'] = cursor.fetchall()[0][0]
         cursor.close()

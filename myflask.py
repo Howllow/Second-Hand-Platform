@@ -17,9 +17,11 @@ app.config['SECRET_KEY'] = 'gimmemoney'
 password = ""
 db = pymysql.connect(**myconfig)
 
+
 @app.route('/')
 def homepage():
     return redirect(url_for('login'))
+
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -45,6 +47,7 @@ def login():
 
         return json.dumps(res)
 
+
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'GET':
@@ -67,6 +70,32 @@ def register():
         res['response_code'] = reg_message['state']
 
         return json.dumps(res)
+
+
+@app.route('/buyer/home', methods=['POST', 'GET'])
+@fl.login_required
+def buyer_home():
+    if request.method == 'GET':
+        return render_template('buyer_home.html')
+
+
+@app.route('/buyer/goods', methods=['POST', 'GET'])
+@fl.login_required
+def buyer_goods():
+    if request.method == 'GET':
+        return render_template('buyer_goods.html')
+
+@app.route('/user/logout', methods=['POST', 'GET'])
+@fl.login_required
+def logout():
+    fl.logout_user()
+    return redirect(url_for('login'))
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return user.UserManager.get(user_id)
+
 
 if __name__ == '__main__':
     app.run(host='localhost', port='5000')

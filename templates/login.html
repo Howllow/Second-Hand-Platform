@@ -92,11 +92,11 @@
                    
                     if (res['response_code'] == 0){
                         if (res['ident'] == 0)
-                            window.location.href = 'buyer_home';
+                            window.location.href = 'buyer/home';
                         else if (res['ident'] == 1)
-                            window.location.href = 'seller_home';
+                            window.location.href = 'seller/home';
                         else
-                            window.location.href = 'admin_home';
+                            window.location.href = 'admin/home';
 
                     }
                     else if(res['response_code'] == 1) {
