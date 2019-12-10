@@ -185,16 +185,6 @@
         content.innerHTML = "A good smart phone made by Apple, 90%new, convenient to use";
         $(".container-info").append(content);
 
-        for (var i = 0; i < comments.length; i++) {
-            var comment = document.createElement("ul");
-            var name = "howllow";
-            var words = "this phone sucks! this phone sucks!";
-            comment.setAttribute("class", "comment-item");
-            comment.innerHTML="<li class='comment-name'>" + name + "</li>" +
-            "<li class='good-seller'>" + words + "</li>";
-            $(".comment-list").append(comment);
-        }
-
         var url = window.location.href;
         var goodsid = url.split("=")[1];
         $(".container-info").setAttribute("id", goodsid);
@@ -225,6 +215,7 @@
 
     $(".cart-button").click(function(){
         console.log("cartbutton clicked");
+        window.location.href = '/buyer/cart';
         $.ajax({
             type: 'POST',
             url: 'http://localhost:5000/buyer/add',

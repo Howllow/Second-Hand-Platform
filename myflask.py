@@ -85,11 +85,34 @@ def buyer_goods():
     if request.method == 'GET':
         return render_template('buyer_goods.html')
 
+
+@app.route('/buyer/cart', methods=['POST', 'GET'])
+@fl.login_required
+def buyer_cart():
+    if request.method == 'GET':
+        return render_template('buyer_car.html')
+
+
+@app.route('/buyer/goodinfo', methods=['POST', 'GET'])
+@fl.login_required
+def good_info():
+    if request.method == 'GET':
+        return render_template('buyer_goodinfo.html')
+
+
+@app.route('/buyer/bought', methods=['POST', 'GET'])
+@fl.login_required
+def bought():
+    if request.method == 'GET':
+        return render_template('buyer_bought.html')
+
+
 @app.route('/user/logout', methods=['POST', 'GET'])
 @fl.login_required
 def logout():
     fl.logout_user()
     return redirect(url_for('login'))
+
 
 
 @login_manager.user_loader
