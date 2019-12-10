@@ -153,11 +153,11 @@
             border-left: none;
         }
 
-        .cart-button {
-            font-size: 25px;
+        .buy-button {
+            font-size: 17px;
         }
-        .info-button {
-            font-size: 25px;
+        .remove-button {
+            font-size: 17px;
         }
 
 
@@ -214,6 +214,133 @@
 </body>
 
 <script>
-    
+    $(document).ready(function(){
+        var list = document.createElement("li");
+        list.setAttribute("class", "good-list");
+        list.setAttribute("id", "good-list");
+        $(".container-goods").append(list);
+        for (var i = 0; i < 10; i++) {
+            var good_name = "IPhoneX" + i;
+            var good_seller = "howllow";
+            var good_price = "5500";
+            var good = document.createElement("ul");
+            good.setAttribute("class", "good-item");
+            good.setAttribute("href", "#");
+            good.setAttribute("id", good_name);
+            good.innerHTML="<li class='good-name'>" + good_name + "</li>" +
+            "<li class='good-seller'>Seller:" + good_seller + "</li>" +
+            "<li class='good-price'>￥" + good_price + "</li>" +
+            "<button type='button' class='btn btn-info btn-lg buy-button' id=good_name>" +
+            "<span class='glyphicon glyphicon-usd'></span>Buy</button>" +
+            "<button type='button' class='btn btn-info btn-lg remove-button'>" +
+            "<span class='glyphicon glyphicon-remove'></span>Remove</button>";
+            $(".good-list").append(good);
+        }
+        $(".buy-button").bind('click', function(){
+            console.log("buy button clicked");
+            console.log($(this).parent().attr("id"));
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/buyer/buy',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({goodsid: $(this).attr('id')}),
+                success: function(res){
+                    console.log(res);
+                    if (res['response_code'] == 0) {
+                        alert("Successful!!");
+                        window.location.href = "/buyer/home";
+                    }
+                    else {
+                        alert("Failed!!");
+                    }
+                }
+            })})
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:5000/buyer/cart',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify({}),
+            success: function(res) {
+                console.log(res);
+                if (res['response_code' == 1]) {
+                    alert("Failed!!");
+                }
+                else if (res['response_code'] == 0) {
+                    good_list = res['good_list'];
+                    var list = document.createElement("li");
+                    list.setAttribute("class", "good-list");
+                    list.setAttribute("id", "good-list");
+                    $(".container-goods").append(list);
+                    for (var i = 0; i < good_list.length; i++) {
+                        var good_name = good_list[i][0];
+                        var good_seller = good_list[i][1];
+                        var good_price = good_list[i][2];
+                        var good_id = good_list[i][3];
+                        var good = document.createElement("ul");
+                        good.setAttribute("class", "good-item");
+                        good.setAttribute("href", "#");
+                        good.setAttribute("id", good_id);
+                        good.innerHTML="<li class='good-name'>" + good_name + "</li>" +
+                        "<li class='good-seller'>Seller:" + good_seller + "</li>" +
+                        "<li class='good-price'>￥" + good_price + "</li>" +
+                        "<button type='button' class='btn btn-info btn-lg buy-button'>" +
+                        "<span class='glyphicon glyphicon-usd'></span>Buy</button>" +
+                        "<button type='button' class='btn btn-info btn-lg remove-button'>" +
+                        "<span class='glyphicon glyphicon-remove'></span>Remove</button>";
+                        $(".good-list").append(good);
+                    }
+
+
+                    $(".buy-button").bind('click', function(){
+                        console.log("buy button clicked");
+                        console.log($(this).parent().attr("id"));
+                        $.ajax({
+                            type: 'POST',
+                            url: 'http://localhost:5000/buyer/buy',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify({goodsid: $(this).parent().attr('id')}),
+                            success: function(res){
+                                console.log(res);
+                                if (res['response_code'] == 0) {
+                                    alert("Successful!!");
+                                    window.location.href = "/buyer/home";
+                                }
+                                else {
+                                    alert("Failed!!");
+                                }
+                            }
+                    })})
+
+                    $(".remove-button").bind('click', function(){
+                        console.log("remove button clicked");
+                        console.log($(this).parent().attr("id"));
+                        $.ajax({
+                            type: 'POST',
+                            url: 'http://localhost:5000/buyer/remove',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify({goodsid: $(this).parent().attr(id)}),
+                            success: function(res){
+                                console.log(res);
+                                if (res['response_code'] == 0) {
+                                    alert("Successful!!");
+                                    window.location.href = "/buyer/home";
+                                }
+                                else {
+                                    alert("Failed!!");
+                                }
+                            }
+                        })
+                    })
+                }
+            }
+        })
+    })
+
+
 </script>
 </html>

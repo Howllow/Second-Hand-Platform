@@ -224,9 +224,10 @@
     })
 
     $(".cart-button").click(function(){
+        console.log("cartbutton clicked");
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/buyer/cart',
+            url: 'http://localhost:5000/buyer/add',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({goodsid:$(this).parent().attr('id')}),
