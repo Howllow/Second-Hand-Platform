@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -210,122 +209,11 @@
         </div>
     </nav>
     <div class="container-goods">
-        <form class="form-inline" role="form">
-            <div class="search-box">
-                <div class="form-group">
-                    <select class="form-control" id="select" style="height:47px; font-size:22px;">
-                    <option value="electronic">Electronic</option>
-                    <option value = "food">Food</option>
-                    <option value = "daily">Daily</option>
-                    <option value = "book">Book</option>
-                    </select>
-                    <input type="text" class="form-control" placeholder="keywords.." id="keyword"
-                           style="height:47px; font-size:22px;width:600px;">
-                    <button type="button" class="btn btn-info btn-lg" id="search">
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    </button>
-                </div>
-            </div>
-        </form>
+
     </div>
 </body>
 
 <script>
-    $("#search").click(function(){
-        var category = $("#select").val();
-        var keyword = $("#keyword").val();
-
-        $("form").css("display", "none");
-        var list = document.createElement("li");
-        list.setAttribute("class", "good-list");
-        list.setAttribute("id", "good-list");
-        $(".container-goods").append(list);
-        for (var i = 0; i < 10; i++) {
-            var good_name = "IPhoneX";
-            var good_seller = "howllow";
-            var good_price = "5500";
-            var good = document.createElement("ul");
-            good.setAttribute("class", "good-item");
-            good.setAttribute("href", "#");
-            good.setAttribute("id", good_name);
-            good.innerHTML="<li class='good-name'>" + good_name + "</li>" +
-            "<li class='good-seller'>Seller:" + good_seller + "</li>" +
-            "<li class='good-price'>￥" + good_price + "</li>" +
-            "<button type='button' class='btn btn-info btn-lg cart-button'>" +
-            "<span class='glyphicon glyphicon-shopping-cart'></span>Cart</button>" +
-            "<button type='button' class='btn btn-info btn-lg info-button'>" +
-            "<span class='glyphicon glyphicon-list'></span>Info</button>";
-            $(".good-list").append(good);
-        }
-
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:5000/buyer/goods',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify({ keyword: keyword, type: category}),
-            success: function(res) {
-                console.log(res);
-                if (res['response_code' == 1]) {
-                    alert("Goods can't be found!!");
-                }
-                else if (res['response_code'] == 0) {
-                    $("form").css("display", "none");
-                    good_list = res['good_list'];
-                    var list = document.createElement("li");
-                    list.setAttribute("class", "good-list");
-                    list.setAttribute("id", "good-list");
-                    $(".container-goods").append(list);
-                    for (var i = 0; i < good_list.length; i++) {
-                        var good_name = good_list[i][0];
-                        var good_seller = good_list[i][1];
-                        var good_price = good_list[i][2];
-                        var good_id = good_list[i][3];
-                        var good = document.createElement("ul");
-                        good.setAttribute("class", "good-item");
-                        good.setAttribute("href", "#");
-                        good.setAttribute("id", good_id);
-                        good.innerHTML="<li class='good-name'>" + good_name + "</li>" +
-                        "<li class='good-seller'>Seller:" + good_seller + "</li>" +
-                        "<li class='good-price'>￥" + good_price + "</li>" +
-                        "<button type='button' class='btn btn-info btn-lg cart-button'>" +
-                        "<span class='glyphicon glyphicon-shopping-cart'></span>Cart</button>" +
-                        "<button type='button' class='btn btn-info btn-lg info-button'>" +
-                        "<span class='glyphicon glyphicon-list'></span>Info</button>";
-                        $(".good-list").append(good);
-                    }
-                }
-            }
-        })
-    })
-
-    $(".cart-button").click(function(){
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:5000/buyer/cart',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify({goodsid:$(this).parent().attr('id')}),
-            success: function(res) {
-                console.log(res);
-                var code = res['response_code'];
-                if (code == 0){
-                    alert("Add to Cart Successfully!!");
-                    window.location.href = '/buyer/cart';
-                }
-                else if (code == 1) {
-                    alert("Already in Your Cart!!");
-                }
-                else {
-                    alert("Failed!!");
-                }
-            }
-        })
-    })
-
-    $(".info-button").click(function(){
-        window.location.href = "./goodinfo?goodsid=" + $(this).parent().attr('id');
-    })
-
+    
 </script>
 </html>
