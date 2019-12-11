@@ -235,6 +235,7 @@
         var category = $("#select").val();
         var keyword = $("#keyword").val();
 
+        /*
         $("form").css("display", "none");
         var list = document.createElement("li");
         list.setAttribute("class", "good-list");
@@ -260,7 +261,7 @@
         $(".info-button").bind("click", function(){
             window.location.href = "/buyer/goodinfo?goodsid=" + $(this).parent().attr('id');
         });
-
+        */
         $.ajax({
             type: 'POST',
             url: 'http://localhost:5000/buyer/goods',
@@ -269,7 +270,7 @@
             data: JSON.stringify({ keyword: keyword, type: category}),
             success: function(res) {
                 console.log(res);
-                if (res['response_code' == 1]) {
+                if (res['response_code'] == 1) {
                     alert("Goods can't be found!!");
                 }
                 else if (res['response_code'] == 0) {

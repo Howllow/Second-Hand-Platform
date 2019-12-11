@@ -176,6 +176,7 @@
 
 <script>
     $(document).ready(function(){
+        /*
         var title = document.createElement("p");
         title.setAttribute("class", "des-title");
         title.innerHTML = "IPhoneX";
@@ -184,10 +185,10 @@
         content.setAttribute("class", "des-content");
         content.innerHTML = "A good smart phone made by Apple, 90%new, convenient to use";
         $(".container-info").append(content);
-
+        */
         var url = window.location.href;
         var goodsid = url.split("=")[1];
-        $(".container-info").setAttribute("id", goodsid);
+        $(".container-info").attr("id", goodsid);
         $.ajax({
             type: 'POST',
             url: 'http://localhost:5000/buyer/goodinfo',
@@ -200,12 +201,12 @@
 
                     var title = document.createElement("p");
                     title.setAttribute("class", "des-title");
-                    title.innerHTML = res['goodname'];
+                    title.innerHTML = res['good_info'][0];
                     $(".container-info").append(title);
 
                     var content = document.createElement("p");
                     content.setAttribute("class", "des-content");
-                    content.innerHTML = res['description'];
+                    content.innerHTML = res['good_info'][1];
                     $(".container-info").append(content);
 
                 }
@@ -215,13 +216,14 @@
 
     $(".cart-button").click(function(){
         console.log("cartbutton clicked");
-        window.location.href = '/buyer/cart';
+        var url = window.location.href;
+        var goodsid = url.split("=")[1];
         $.ajax({
             type: 'POST',
             url: 'http://localhost:5000/buyer/add',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: JSON.stringify({goodsid:$(this).parent().attr('id')}),
+            data: JSON.stringify({goodsid: goodsid}),
             success: function(res) {
                 console.log(res);
                 var code = res['response_code'];
@@ -237,6 +239,7 @@
                 }
             }
         })
+        window.location.href = '/buyer/cart';
     })
 
 </script>

@@ -169,7 +169,7 @@
             <img src="../static/img/logo.png" class="nav-logo" alt="">
             <div class="menu">
                 <ul class="nav navbar-nav">
-                    <li><a href="/home">Home</a></li>
+                    <li><a href="/buyer/home">Home</a></li>
                     <li><a href="/buyer/bought">BoughtItems</a></li>
                     <li><a href="/buyer/cart">ShoppingCart</a></li>
                     <li class="dropdown">
@@ -215,6 +215,7 @@
 
 <script>
     $(document).ready(function(){
+        /*
         var list = document.createElement("li");
         list.setAttribute("class", "good-list");
         list.setAttribute("id", "good-list");
@@ -236,6 +237,7 @@
             "<span class='glyphicon glyphicon-remove'></span>Remove</button>";
             $(".good-list").append(good);
         }
+        */
         $(".buy-button").bind('click', function(){
             console.log("buy button clicked");
             console.log($(this).parent().attr("id"));
@@ -323,7 +325,7 @@
                             url: 'http://localhost:5000/buyer/remove',
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
-                            data: JSON.stringify({goodsid: $(this).parent().attr(id)}),
+                            data: JSON.stringify({goodsid: $(this).parent().attr('id')}),
                             success: function(res){
                                 console.log(res);
                                 if (res['response_code'] == 0) {

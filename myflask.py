@@ -31,21 +31,15 @@ def login():
     elif request.method == 'POST':
         data = request.get_json()
         log_message = login_user(data, db)
-        res = dict()
 
-        if log_message['state'] == 0:
+        if log_message['response_code'] == 0:
             usr = user.User()
             usr.username = data['username']
             usr.id = data['username']
             fl.login_user(usr)
             flash('Login Success')
-            res['response_code'] = 0
-            res['ident'] = log_message['ident']
 
-        else:
-            res['response_code'] = log_message['state']
-
-        return json.dumps(res)
+        return json.dumps(log_message)
 
 
 @app.route('/register', methods=['POST', 'GET'])
@@ -54,7 +48,6 @@ def register():
         return render_template('register.html')
 
     elif request.method == 'POST':
-        print("1")
         data = request.get_json()
         if data['gender'] == 'M':
             data['gender'] = 0
@@ -64,12 +57,10 @@ def register():
             data['ident'] = 0
         else:
             data['ident'] = 1
-        res = dict()
+
         reg_message = register_user(data, db)
 
-        res['response_code'] = reg_message['state']
-
-        return json.dumps(res)
+        return json.dumps(reg_message)
 
 
 @app.route('/buyer/home', methods=['POST', 'GET'])
@@ -85,12 +76,70 @@ def buyer_goods():
     if request.method == 'GET':
         return render_template('buyer_goods.html')
 
+    elif request.method == 'POST':
+        data = request.get_json()
+        good_message = find_goods(data, db)
+
+        return json.dumps(good_message)
+
 
 @app.route('/buyer/cart', methods=['POST', 'GET'])
 @fl.login_required
 def buyer_cart():
     if request.method == 'GET':
         return render_template('buyer_car.html')
+
+    elif request.method == 'POST':
+        data = request.get_json()
+        data['username'] = fl.current_user.username
+        cart_message = find_cart(data, db)
+        return json.dumps(cart_message)
+
+
+@app.route('/buyer/add', methods=['POST'])
+@fl.login_required
+def buyer_add():
+    if request.method == 'POST':
+        data = request.get_json()
+        data['username'] = fl.current_user.username
+        add_message = add_cart(data, db)
+        return json.dumps(add_message)
+
+
+@app.route('/buyer/buy', methods=['POST'])
+@fl.login_required
+def buyer_buy():
+    if request.method == 'POST':
+        data = request.get_json()
+        data['username'] = fl.current_user.username
+        buy_message = buy_good(data, db)
+        return json.dumps(buy_message)
+
+
+@app.route('/buyer/remove', methods=['POST'])
+@fl.login_required
+def buyer_remove():
+    if request.method == 'POST':
+        data = request.get_json()
+        data['username'] = fl.current_user.username
+        remove_message = remove_cart(data, db)
+        return json.dumps(remove_message)
+
+
+@app.route('/buyer/return', methods=['POST'])
+@fl.login_required
+def buyer_return():
+    if request.method == 'POST':
+        data = request.get_json()
+        return_message = good_return(data, db)
+        return json.dumps(return_message)
+
+
+@app.route('/buyer/comment', methods=['POST'])
+@fl.login_required
+def buyer_comment():
+    data = request.get_json()
+    return json.dumps(good_comment(data, db))
 
 
 @app.route('/buyer/goodinfo', methods=['POST', 'GET'])
@@ -99,6 +148,12 @@ def good_info():
     if request.method == 'GET':
         return render_template('buyer_goodinfo.html')
 
+    elif request.method == 'POST':
+        data = request.get_json()
+        info_message = find_info(data, db)
+
+        return json.dumps(info_message)
+
 
 @app.route('/buyer/bought', methods=['POST', 'GET'])
 @fl.login_required
@@ -106,13 +161,19 @@ def bought():
     if request.method == 'GET':
         return render_template('buyer_bought.html')
 
+    elif request.method == 'POST':
+        data = request.get_json()
+        data['username'] = fl.current_user.username
+        bought_message = find_bought(data, db)
+
+        return json.dumps(bought_message)
+
 
 @app.route('/user/logout', methods=['POST', 'GET'])
 @fl.login_required
 def logout():
     fl.logout_user()
     return redirect(url_for('login'))
-
 
 
 @login_manager.user_loader
