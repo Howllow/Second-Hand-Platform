@@ -63,6 +63,21 @@ def register():
         return json.dumps(reg_message)
 
 
+@app.route('/setting', methods=['POST'])
+@fl.login_required
+def setting():
+    if request.method == 'POST':
+        data = request.get_json()
+        data['username'] = fl.current_user.username
+        if data['type'] == "gender":
+            if data['content'] == 'F':
+                data['content'] = 1
+            else:
+                data['content'] = 0
+        setting_message = change_setting(data, db)
+        return json.dumps(setting_message)
+
+
 @app.route('/buyer/home', methods=['POST', 'GET'])
 @fl.login_required
 def buyer_home():
@@ -167,6 +182,12 @@ def bought():
         bought_message = find_bought(data, db)
 
         return json.dumps(bought_message)
+
+
+@app.route('/buyer/setting', methods=['GET'])
+@fl.login_required
+def buyer_setting():
+    return render_template('buyer_setting.html')
 
 
 @app.route('/user/logout', methods=['POST', 'GET'])

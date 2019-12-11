@@ -2,15 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27b81d05-d662-45da-b3a1-3d00c43b14e6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c3263268-ac82-43a4-9045-782c9815edeb.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c3263268-ac82-43a4-9045-782c9815edeb.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/buyer_setting.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/dbgmm.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/dbgmm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myflask.py" beforeDir="false" afterPath="$PROJECT_DIR$/myflask.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/buyer_bought.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/buyer_bought.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/buyer_car.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/buyer_car.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/buyer_goodinfo.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/buyer_goodinfo.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/buyer_goods.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/buyer_goods.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/buyer_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/buyer_home.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,7 +21,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Second_Hand_Platform$test.coverage" NAME="test Coverage Results" MODIFIED="1575601745960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/db" />
-    <SUITE FILE_PATH="coverage/Second_Hand_Platform$myflask.coverage" NAME="myflask Coverage Results" MODIFIED="1576063774308" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Second_Hand_Platform$myflask.coverage" NAME="myflask Coverage Results" MODIFIED="1576068337316" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Second_Hand_Platform$dbgmm.coverage" NAME="dbgmm Coverage Results" MODIFIED="1575617193127" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/db" />
   </component>
   <component name="DatabaseView">
@@ -51,16 +51,23 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="gmm: schema" type="c314c289:MysqlImplModel$Schema" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="GMM@10.128.202.15" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="gmm: schema" type="c314c289:MysqlImplModel$Schema" />
+        <item name="users: table" type="98d5ac3d:MysqlImplModel$Table" />
+      </path>
     </expand>
     <select />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="dbgmm.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dbgmm.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/db/dbgmm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="418" column="9" selection-start-line="418" selection-start-column="9" selection-end-line="418" selection-end-column="9" />
+            <state relative-caret-position="776">
+              <caret line="517" column="26" selection-start-line="517" selection-start-column="26" selection-end-line="517" selection-end-column="26" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -71,8 +78,8 @@
       <file leaf-file-name="buyer_goods.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/buyer_goods.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="636">
-              <caret line="301" column="63" selection-start-line="301" selection-start-column="63" selection-end-line="301" selection-end-column="63" />
+            <state relative-caret-position="-1872">
+              <caret line="202" column="48" selection-start-line="202" selection-start-column="48" selection-end-line="202" selection-end-column="48" />
               <folding>
                 <element signature="n#style#0;n#select#0;n#div#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -81,20 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="buyer_home.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/buyer_home.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-15">
-              <caret line="57" column="40" selection-start-line="57" selection-start-column="40" selection-end-line="57" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="myflask.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="myflask.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/myflask.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="142" lean-forward="true" selection-start-line="142" selection-end-line="142" />
+            <state relative-caret-position="545">
+              <caret line="75" column="29" selection-start-line="75" selection-start-column="29" selection-end-line="75" selection-end-column="29" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -102,20 +100,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="buyer_car.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/buyer_car.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-53">
-              <caret line="259" column="16" lean-forward="true" selection-start-line="259" selection-start-column="16" selection-end-line="259" selection-end-column="16" />
+      <file leaf-file-name="users" pinned="false" current-in-tab="false">
+        <entry file="das://c3263268-ac82-43a4-9045-782c9815edeb/schema/gmm/table/users">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="buyer_bought.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/buyer_bought.html">
+      <file leaf-file-name="register.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/register.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1530">
-              <caret line="240" column="10" selection-start-line="240" selection-start-column="10" selection-end-line="240" selection-end-column="10" />
+            <state relative-caret-position="266">
+              <caret line="125" column="68" selection-start-line="125" selection-start-column="22" selection-end-line="125" selection-end-column="68" />
             </state>
           </provider>
         </entry>
@@ -123,17 +121,17 @@
       <file leaf-file-name="buyer_goodinfo.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/buyer_goodinfo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="498">
-              <caret line="241" column="45" selection-start-line="241" selection-start-column="45" selection-end-line="241" selection-end-column="45" />
+            <state relative-caret-position="313">
+              <caret line="158" column="48" selection-start-line="158" selection-start-column="48" selection-end-line="158" selection-end-column="48" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="orders" pinned="false" current-in-tab="false">
-        <entry file="das://c3263268-ac82-43a4-9045-782c9815edeb/schema/gmm/table/orders">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
+      <file leaf-file-name="buyer_setting.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/buyer_setting.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-243">
+              <caret line="179" column="20" selection-start-line="179" selection-start-column="20" selection-end-line="179" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -178,14 +176,16 @@
         <option value="$PROJECT_DIR$/db/config.py" />
         <option value="$PROJECT_DIR$/templates/register.html" />
         <option value="$PROJECT_DIR$/templates/login.html" />
-        <option value="$PROJECT_DIR$/templates/buyer_home.html" />
         <option value="$PROJECT_DIR$/db/utils.py" />
-        <option value="$PROJECT_DIR$/templates/buyer_goods.html" />
+        <option value="$PROJECT_DIR$/templates/setting.html" />
+        <option value="$PROJECT_DIR$/db/dbgmm.py" />
+        <option value="$PROJECT_DIR$/templates/buyer_bought.html" />
         <option value="$PROJECT_DIR$/templates/buyer_car.html" />
         <option value="$PROJECT_DIR$/templates/buyer_goodinfo.html" />
-        <option value="$PROJECT_DIR$/templates/buyer_bought.html" />
-        <option value="$PROJECT_DIR$/db/dbgmm.py" />
+        <option value="$PROJECT_DIR$/templates/buyer_goods.html" />
+        <option value="$PROJECT_DIR$/templates/buyer_home.html" />
         <option value="$PROJECT_DIR$/myflask.py" />
+        <option value="$PROJECT_DIR$/templates/buyer_setting.html" />
       </list>
     </option>
   </component>
@@ -342,14 +342,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25531915" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.25531915" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Database Console" order="7" weight="0.32978722" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18541667" />
@@ -409,30 +408,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/db/dbgmm.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="931">
-          <caret line="52" column="57" selection-start-line="52" selection-start-column="57" selection-end-line="52" selection-end-column="57" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="71" selection-start-line="8" selection-start-column="71" selection-end-line="8" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1862">
-          <caret line="98" column="58" selection-start-line="98" selection-start-column="58" selection-end-line="98" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/buyer_goods.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5681">
@@ -630,13 +605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="71" selection-start-line="8" selection-start-column="71" selection-end-line="8" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
@@ -651,21 +619,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://c3263268-ac82-43a4-9045-782c9815edeb/schema/gmm/table/users">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://c3263268-ac82-43a4-9045-782c9815edeb/schema/gmm/table/requests">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://c3263268-ac82-43a4-9045-782c9815edeb/schema/gmm/table/goods">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
@@ -679,6 +633,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/setting">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/setting.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="4" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="das://c3263268-ac82-43a4-9045-782c9815edeb/schema/gmm/table/orders">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -686,17 +650,76 @@
         </state>
       </provider>
     </entry>
+    <entry file="das://c3263268-ac82-43a4-9045-782c9815edeb/schema/gmm/table/goods">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/buyer_bought.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="201" column="48" selection-start-line="201" selection-start-column="48" selection-end-line="201" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/buyer_car.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="201" column="48" selection-start-line="201" selection-start-column="48" selection-end-line="201" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/buyer_home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="85" column="48" selection-start-line="85" selection-start-column="48" selection-end-line="85" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://c3263268-ac82-43a4-9045-782c9815edeb/schema/gmm/table/users">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/register.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="125" column="68" selection-start-line="125" selection-start-column="22" selection-end-line="125" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/buyer_goodinfo.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="498">
-          <caret line="241" column="45" selection-start-line="241" selection-start-column="45" selection-end-line="241" selection-end-column="45" />
+        <state relative-caret-position="313">
+          <caret line="158" column="48" selection-start-line="158" selection-start-column="48" selection-end-line="158" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/buyer_setting.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-243">
+          <caret line="179" column="20" selection-start-line="179" selection-start-column="20" selection-end-line="179" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myflask.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="545">
+          <caret line="75" column="29" selection-start-line="75" selection-start-column="29" selection-end-line="75" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/buyer_goods.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="636">
-          <caret line="301" column="63" selection-start-line="301" selection-start-column="63" selection-end-line="301" selection-end-column="63" />
+        <state relative-caret-position="-1872">
+          <caret line="202" column="48" selection-start-line="202" selection-start-column="48" selection-end-line="202" selection-end-column="48" />
           <folding>
             <element signature="n#style#0;n#select#0;n#div#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -704,43 +727,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/buyer_car.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-53">
-          <caret line="259" column="16" lean-forward="true" selection-start-line="259" selection-start-column="16" selection-end-line="259" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/buyer_bought.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1530">
-          <caret line="240" column="10" selection-start-line="240" selection-start-column="10" selection-end-line="240" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/dbgmm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="418" column="9" selection-start-line="418" selection-start-column="9" selection-end-line="418" selection-end-column="9" />
+        <state relative-caret-position="776">
+          <caret line="517" column="26" selection-start-line="517" selection-start-column="26" selection-end-line="517" selection-end-column="26" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/buyer_home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-15">
-          <caret line="57" column="40" selection-start-line="57" selection-start-column="40" selection-end-line="57" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myflask.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="142" lean-forward="true" selection-start-line="142" selection-end-line="142" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
           </folding>
         </state>
       </provider>

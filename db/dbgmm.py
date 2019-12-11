@@ -458,7 +458,7 @@ def good_comment(data: dict, conn: Connection):
        :param data:
            python dictionary, containing keys as follows:
                comment: string
-               goodsid: int
+               goodsid: string
        :param conn:
            pymysql connection
        :return:
@@ -482,3 +482,37 @@ def good_comment(data: dict, conn: Connection):
     cursor.close()
     comment_message['response_code'] = 0
     return comment_message
+
+
+def change_setting(data: dict, conn: Connection):
+    """
+       :param data:
+           python dictionary, containing keys as follows:
+               username: string
+               type: string
+               content: string
+       :param conn:
+           pymysql connection
+       :return:
+           comment_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+    """
+
+    setting_message = dict()
+    if not check(['username', 'type', 'content'], data, 'change setting'):
+        setting_message['response_code'] = 1
+        return setting_message
+
+    cursor = conn.cursor()
+    sql = F"update users set {data['type']} = '{data['content']}' "\
+          F"where username = '{data['username']}';"
+
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+
+    setting_message['response_code'] = 0
+
+    return setting_message

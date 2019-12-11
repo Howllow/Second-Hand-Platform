@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>GoodiesMoreMarket </title>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-image: url(../static/img/welcome2.jpg);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+
+
+        .nav-logo {
+            height: 1.7%;
+            width: 3.4%;
+            margin-left: 10px;
+        }
+
+        .container-nav {
+            display: flex;
+            width: 100%;
+            justify-content: flex-start;
+            align-items: center;
+            font-family:"Arial Black";
+            font-size: medium;
+        }
+
+        .container-setting {
+            border: 1px solid;
+            border-color: bisque;
+            border-radius: 25px;
+            box-shadow: 2px 1px 1px gray;
+            margin: 0 auto;
+            position: relative;
+            width: 30%;
+            height: 70%;
+            top: 17%;
+            background: rgba(107, 65, 1, 0.85);
+        }
+
+        .button-setting {
+            display: block;
+            font-size: 25px;
+            margin: 0 auto;
+        }
+
+        .form-control{
+            height: 100%;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-nav">
+            <img src="../static/img/logo.png" class="nav-logo" alt="">
+            <div class="menu">
+                <ul class="nav navbar-nav">
+                    <li><a href="/buyer/home">Home</a></li>
+                    <li><a href="/buyer/cart">ShoppingCart</a></li>
+                    <li><a href="/buyer/bought">BoughtItems</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Search
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/buyer/goods">Goods</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/buyer/tuhao">Tuhao Buyer</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/buyer/hotseller">Hot Seller</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/buyer/similar">Similar Buyer</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/buyer/audience">Seller Audience</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" id="username" data-toggle="dropdown">
+                            {% if current_user.is_authenticated == true%}
+                            {{ current_user.username }}
+                            {% else %}
+                            Me
+                            {% endif %}
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/buyer/setting">setting</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/user/logout">logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-setting">
+        <br><br><br><br><br><br>
+        <button type="button" class="btn btn-warning btn-block button-setting" id="nickname">
+            Change NickName
+        </button>
+        <br><br><br>
+        <button type="button" class="btn btn-warning btn-block button-setting" id="gender">
+            Change Gender
+        </button>
+        <br><br><br>
+        <button type="button" class="btn btn-warning btn-block button-setting" id="phone">
+            Change PhoneNum
+        </button>
+        <br><br><br>
+        <button type="button" class="btn btn-warning btn-block button-setting" id="age">
+            Change Age
+        </button>
+    </div>
+</body>
+
+<script>
+    $("#nickname").click(function(){
+        var val = prompt("Input New Nickname!!");
+        if (val == null || val == "")
+            alert("Can't be empty!!");
+        else {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/setting',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({type: "nickname", content: val}),
+                success: function(res){
+                    console.log(res);
+                    if (res['response_code'] == 0) {
+                        alert("Successful!!");
+                    }
+                    else {
+                        alert("Failed!!");
+                    }
+                }
+            })
+        }
+    })
+
+    $("#gender").click(function(){
+        var val = prompt("Input New Gender!! F or M !!");
+        if (val != 'M' && val != 'F') {
+            alert("Please Input F or M!!");
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/setting',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({type: "gender", content: val}),
+                success: function(res){
+                    console.log(res);
+                    if (res['response_code'] == 0) {
+                        alert("Successful!!");
+                    }
+                    else {
+                        alert("Failed!!");
+                    }
+                }
+            })
+        }
+    })
+
+    $("#phone").click(function(){
+        var val = prompt("Input New Phone Number!!");
+        if (val == null || val =="")
+            alert("Can't be empty!!");
+        else {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/setting',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({type: "phone", content: val}),
+                success: function(res){
+                    console.log(res);
+                    if (res['response_code'] == 0) {
+                        alert("Successful!!");
+                    }
+                    else {
+                        alert("Failed!!");
+                    }
+                }
+            })
+        }
+    })
+
+    $("#age").click(function(){
+        var val = prompt("Input New Age!! 5-100 !!");
+        if (!(val >= 5 && val <= 100)) {
+            alert("Age Wrong!! You can't buy online at such age");
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/setting',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({type: "age", content: val}),
+                success: function(res){
+                    console.log(res);
+                    if (res['response_code'] == 0) {
+                        alert("Successful!!");
+                    }
+                    else {
+                        alert("Failed!!");
+                    }
+                }
+            })
+        }
+    })
+
+</script>
+</html>
