@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -154,11 +153,11 @@
             border-left: none;
         }
 
-        .cart-button {
-            font-size: 25px;
+        .cancel-button {
+            font-size: 20px;
         }
         .info-button {
-            font-size: 25px;
+            font-size: 20px;
         }
 
 
@@ -170,22 +169,21 @@
             <img src="../static/img/logo.png" class="nav-logo" alt="">
             <div class="menu">
                 <ul class="nav navbar-nav">
-                    <li><a href="/home">Home</a></li>
-                    <li><a href="/buyer/bought">BoughtItems</a></li>
-                    <li><a href="/buyer/cart">ShoppingCart</a></li>
+                    <li><a href="/seller/home">Home</a></li>
+                    <li><a href="/seller/sold">SoldItems</a></li>
+                    <li><a href="/seller/sell">SellItems</a></li>
+                    <li><a href="/seller/selling">SellingItems</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Search
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/buyer/goods">Goods</a></li>
-                            <li class="divider"></li>
                             <li><a href="/buyer/special">Special</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" id="username" data-toggle="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             {% if current_user.is_authenticated == true%}
                             {{ current_user.username }}
                             {% else %}
@@ -194,7 +192,7 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/buyer/setting">setting</a></li>
+                            <li><a href="/seller/setting">setting</a></li>
                             <li class="divider"></li>
                             <li><a href="/user/logout">logout</a></li>
                         </ul>
@@ -203,72 +201,26 @@
             </div>
         </div>
     </nav>
+
     <div class="container-goods">
-        <form class="form-inline" role="form">
-            <div class="search-box">
-                <div class="form-group">
-                    <select class="form-control" id="select" style="height:47px; font-size:22px;">
-                    <option value="electronic">Electronic</option>
-                    <option value = "food">Food</option>
-                    <option value = "daily">Daily</option>
-                    <option value = "book">Book</option>
-                    </select>
-                    <input type="text" class="form-control" placeholder="keywords.." id="keyword"
-                           style="height:47px; font-size:22px;width:600px;">
-                    <button type="button" class="btn btn-info btn-lg" id="search">
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    </button>
-                </div>
-            </div>
-        </form>
+
     </div>
 </body>
 
 <script>
-    $("#search").click(function(){
-        var category = $("#select").val();
-        var keyword = $("#keyword").val();
-
-        /*
-        $("form").css("display", "none");
-        var list = document.createElement("li");
-        list.setAttribute("class", "good-list");
-        list.setAttribute("id", "good-list");
-        $(".container-goods").append(list);
-        for (var i = 0; i < 10; i++) {
-            var good_name = "IPhoneX";
-            var good_seller = "howllow";
-            var good_price = "5500";
-            var good = document.createElement("ul");
-            good.setAttribute("class", "good-item");
-            good.setAttribute("href", "#");
-            good.setAttribute("id", good_name);
-            good.innerHTML="<li class='good-name'>" + good_name + "</li>" +
-            "<li class='good-seller'>Seller:" + good_seller + "</li>" +
-            "<li class='good-price'>￥" + good_price + "</li>" +
-            "<button type='button' class='btn btn-info btn-lg cart-button'>" +
-            "<span class='glyphicon glyphicon-shopping-cart'></span>Cart</button>" +
-            "<button type='button' class='btn btn-info btn-lg info-button'>" +
-            "<span class='glyphicon glyphicon-list'></span>Info</button>";
-            $(".good-list").append(good);
-        }
-        $(".info-button").bind("click", function(){
-            window.location.href = "/buyer/goodinfo?goodsid=" + $(this).parent().attr('id');
-        });
-        */
+     $(document).ready(function(){
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/buyer/goods',
+            url: 'http://localhost:5000/seller/selling',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: JSON.stringify({ keyword: keyword, type: category}),
+            data: JSON.stringify({}),
             success: function(res) {
                 console.log(res);
-                if (res['response_code'] == 1) {
-                    alert("Goods can't be found!!");
+                if (res['response_code' == 1]) {
+                    alert("Failed!!");
                 }
                 else if (res['response_code'] == 0) {
-                    $("form").css("display", "none");
                     good_list = res['good_list'];
                     var list = document.createElement("li");
                     list.setAttribute("class", "good-list");
@@ -276,54 +228,51 @@
                     $(".container-goods").append(list);
                     for (var i = 0; i < good_list.length; i++) {
                         var good_name = good_list[i][0];
-                        var good_seller = good_list[i][1];
-                        var good_price = good_list[i][2];
+                        var good_type = good_list[i][2];
+                        var good_price = good_list[i][1];
                         var good_id = good_list[i][3];
                         var good = document.createElement("ul");
                         good.setAttribute("class", "good-item");
                         good.setAttribute("href", "#");
                         good.setAttribute("id", good_id);
                         good.innerHTML="<li class='good-name'>" + good_name + "</li>" +
-                        "<li class='good-seller'>Seller:" + good_seller + "</li>" +
+                        "<li class='good-seller'>Category:" + good_type + "</li>" +
                         "<li class='good-price'>￥" + good_price + "</li>" +
-                        "<button type='button' class='btn btn-info btn-lg cart-button'>" +
-                        "<span class='glyphicon glyphicon-shopping-cart'></span>Cart</button>" +
+                        "<button type='button' class='btn btn-info btn-lg cancel-button'>" +
+                        "<span class='glyphicon glyphicon-remove'></span>Cancel</button>" +
                         "<button type='button' class='btn btn-info btn-lg info-button'>" +
                         "<span class='glyphicon glyphicon-list'></span>Info</button>";
                         $(".good-list").append(good);
                     }
 
-                    $(".cart-button").bind("click", function(){
+
+                    $(".cancel-button").bind('click', function(){
+                        console.log("cancel button clicked");
+                        console.log($(this).parent().attr("id"));
                         $.ajax({
                             type: 'POST',
-                            url: 'http://localhost:5000/buyer/add',
+                            url: 'http://localhost:5000/cancel',
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
-                            data: JSON.stringify({goodsid:$(this).parent().attr('id')}),
-                            success: function(res) {
+                            data: JSON.stringify({goodsid: $(this).parent().attr('id')}),
+                            success: function(res){
                                 console.log(res);
-                                var code = res['response_code'];
-                                if (code == 0){
-                                    alert("Add to Cart Successfully!!");
-                                    window.location.href = '/buyer/cart';
-                                }
-                                else if (code == 1) {
-                                    alert("Already in Your Cart!!");
+                                if (res['response_code'] == 0) {
+                                    alert("Successful!!");
+                                    window.location.href = "/seller/home";
                                 }
                                 else {
                                     alert("Failed!!");
                                 }
                             }
-                        })
-                    });
+                    })})
 
                     $(".info-button").bind("click", function(){
-                        window.location.href = "/buyer/goodinfo?goodsid=" + $(this).parent().attr('id');
+                        window.location.href = "/seller/goodinfo?goodsid=" + $(this).parent().attr('id');
                     });
                 }
             }
         })
     })
-
 </script>
 </html>

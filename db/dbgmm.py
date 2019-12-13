@@ -494,7 +494,7 @@ def change_setting(data: dict, conn: Connection):
        :param conn:
            pymysql connection
        :return:
-           comment_message:
+           setting_message:
                response_code:
                    0 for success
                    1 for wrong data
@@ -516,3 +516,190 @@ def change_setting(data: dict, conn: Connection):
     setting_message['response_code'] = 0
 
     return setting_message
+
+
+def sell_good(data: dict, conn: Connection):
+    """
+       :param data:
+           python dictionary, containing keys as follows:
+               username: string
+               type: string
+               description: string
+               price: string
+               goodname: string
+       :param conn:
+           pymysql connection
+       :return:
+           sell_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+    """
+
+    sell_message = dict()
+    if not check(['username', 'type', 'description', 'price', 'goodname'], data, 'sell good'):
+        sell_message['response_code'] = 1
+        return sell_message
+
+    dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    cursor = conn.cursor()
+    sql = F"insert into goods(sold, type, description, price, seller, uptime, goodname)"\
+          F"VALUE(0, '{data['type']}', '{data['description']}', {data['price']}, '{data['username']}'," \
+          F"'{dt}', '{data['goodname']}');"
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    sell_message['response_code'] = 0
+    return sell_message
+
+
+def selling_good(data: dict, conn: Connection):
+    """
+       :param data:
+           python dictionary, containing keys as follows:
+               username: string
+       :param conn:
+           pymysql connection
+       :return:
+           selling_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+               good_list
+    """
+
+    username = data['username']
+    selling_message = dict()
+
+    if not check(['username'], data, "selling good"):
+        selling_message['response_code'] = 1
+        return selling_message
+
+    cursor = conn.cursor()
+    sql = F"select goodname, price, type, goodsid from goods "\
+          F"where seller = '{username}' and sold = 0 "\
+          F"ORDER BY type, uptime ASC;"
+
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    cursor.close()
+
+    good_list = []
+    for row in rows:
+        good_list.append([row[0], row[1], row[2], row[3]])
+
+    selling_message['good_list'] = good_list
+    selling_message['response_code'] = 0
+
+    return selling_message
+
+
+def cancel_good(data: dict, conn: Connection):
+    """
+       :param data:
+           python dictionary, containing keys as follows:
+               goodsid: string
+       :param conn:
+           pymysql connection
+       :return:
+           cancel_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+    """
+
+    cancel_message = dict()
+
+    if not check(['goodsid'], data, 'cacel good'):
+        cancel_message['response_code'] = 1
+        return cancel_message
+
+    cursor = conn.cursor()
+    sql = F"delete from goods "\
+          F"where goodsid = {data['goodsid']};"
+
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+
+    cancel_message['response_code'] = 0
+    return cancel_message
+
+
+def change_good(data: dict, conn: Connection):
+    """
+       :param data:
+           python dictionary, containing keys as follows:
+               goodsid: string
+               type: string
+               content: string
+       :param conn:
+           pymysql connection
+       :return:
+           change_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+    """
+
+    change_message = dict()
+    if not check(['goodsid', 'type', 'content'], data, "change good"):
+        change_message['response_code'] = 1
+
+    cursor = conn.cursor()
+    if data['type'] == "price":
+        sql = F"update goods set price = {data['content']} "\
+              F"where goodsid = {data['goodsid']};"
+    else:
+        sql = F"update goods set {data['type']} = '{data['content']}' "\
+              F"where goodsid = {data['goodsid']};"
+
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+
+    change_message['response_code'] = 0
+    return change_message
+
+
+def sold_good(data: dict, conn :Connection):
+    """
+       :param data:
+           python dictionary, containing keys as follows:
+               username: string
+
+       :param conn:
+           pymysql connection
+       :return:
+           sold_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+               good_list：goodname, buyer, ordertime, comment
+    """
+
+    sold_message = dict()
+    if not check(['username'], data, "sold good"):
+        sold_message['response_code'] = 1
+        return sold_message
+
+
+    print(data)
+    sql = F"select G.goodname, U.nickname, O.time, G.comment from goods as G, orders as O, users as U "\
+          F"where G.goodsid = O.goodsid and G.seller = '{data['username']}' and U.username = O.buyer "\
+          F"ORDER BY O.time, U.nickname;"
+    cursor = conn.cursor()
+    cursor.execute(sql)
+
+    rows = cursor.fetchall()
+    cursor.close()
+
+    good_list = []
+    for row in rows:
+        good_list.append([row[0], row[1], row[2], row[3]])
+
+    sold_message['response_code'] = 0
+    sold_message['good_list'] = good_list
+
+    return sold_message
+

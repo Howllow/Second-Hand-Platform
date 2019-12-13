@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>GoodiesMoreMarket </title>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-image: url(../static/img/welcome2.jpg);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-logo {
+            height: 80px;
+            width: 80px;
+            margin-left: 10px;
+        }
+
+        .container-nav {
+            display: flex;
+            width: 100%;
+            height: 80px;
+            justify-content: flex-start;
+            align-items: center;
+            font-family:"Arial Black";
+            font-size: medium;
+        }
+
+         .container-sell {
+            border: 1px solid;
+            border-color: bisque;
+            border-radius: 25px;
+            box-shadow: 2px 1px 1px gray;
+            margin: 0 auto;
+            position: relative;
+            width: 30%;
+            height: 70%;
+            top: 10%;
+            background: rgba(107, 65, 1, 0.85);
+        }
+
+        .form-group {
+            margin: 10px;
+            font-size: 19px;
+            color: #f7e1b5;
+        }
+
+        .sell-button {
+            postion:absolute;
+            display:block;
+            font-size: 25px;
+            margin-top: 7%;
+            margin-left: auto;
+            margin-right:auto;
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-nav">
+            <img src="../static/img/logo.png" class="nav-logo" alt="">
+            <div class="menu">
+                <ul class="nav navbar-nav">
+                    <li><a href="/seller/home">Home</a></li>
+                    <li><a href="/seller/sold">SoldItems</a></li>
+                    <li><a href="/seller/sell">SellItems</a></li>
+                    <li><a href="/seller/selling">SellingItems</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Search
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/buyer/special">Special</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            {% if current_user.is_authenticated == true%}
+                            {{ current_user.username }}
+                            {% else %}
+                            Me
+                            {% endif %}
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/seller/setting">setting</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/user/logout">logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-sell">
+        <br><br><br>
+        <div class="form-group">
+            <label for="goodname">Good's Name</label>
+            <input class="form-control" style="height:47px; font-size:22px;" id="goodname" placeholder="Enter Good's Name">
+        </div>
+        <br><br>
+        <div class="form-group">
+            <label for="Price">Good's Price</label>
+            <input class="form-control" style="height:47px; font-size:22px;" oninput = "value=value.replace(/[^\d]/g,'')"
+                   id="price" placeholder="Enter Price(RMB)">
+        </div> <br><br>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" style="height:47px; font-size:22px;">
+            <option value="electronic">Electronic</option>
+            <option value = "food">Food</option>
+            <option value = "daily">Daily</option>
+            <option value = "book">Book</option>
+            </select>
+        </div> <br><br>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" rows="4" id="description"></textarea>
+        </div>
+    </div>
+
+    <button type='button' class='btn btn-warning btn-lg info-button sell-button'>
+    <span class='glyphicon glyphicon-shopping-cart'></span>Sell!!</button>
+</body>
+
+<script>
+    $(".sell-button").click(function(){
+        var goodname = $("#goodname").val();
+        var price = $("#price").val();
+        var type = $("#category").val();
+        var description = $("#description").val();
+        if (goodname == "" || price == "" || type == "" || description == "")
+            alert("Can't be empty!!");
+        else {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/seller/sell',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({goodname: goodname, price: price, type: type, description: description}),
+                success: function (res) {
+                    console.log(res);
+                    if (res['response_code'] == 0) {
+                        alert("Successful!!");
+                        window.href.location = "/seller/selling";
+                    }
+                    else
+                        alert("Failed!!");
+                }
+            })
+        }
+
+    })
+</script>
+</html>

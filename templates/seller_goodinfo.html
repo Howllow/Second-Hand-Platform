@@ -107,14 +107,11 @@
             border-radius: 10px;
         }
 
-        .cart-button {
-            postion:absolute;
-            display:block;
+        .button-container{
+            margin-top: 16%;
+        }
+        .change-button {
             font-size: 25px;
-            margin-top: 20%;
-            margin-left: auto;
-            margin-right:auto;
-
         }
 
 
@@ -126,22 +123,21 @@
             <img src="../static/img/logo.png" class="nav-logo" alt="">
             <div class="menu">
                 <ul class="nav navbar-nav">
-                    <li><a href="/buyer/home">Home</a></li>
-                    <li><a href="/buyer/cart">ShoppingCart</a></li>
-                    <li><a href="/buyer/bought">BoughtItems</a></li>
+                    <li><a href="/seller/home">Home</a></li>
+                    <li><a href="/seller/sold">SoldItems</a></li>
+                    <li><a href="/seller/sell">SellItems</a></li>
+                    <li><a href="/seller/selling">SellingItems</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Search
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/buyer/goods">Goods</a></li>
-                            <li class="divider"></li>
                             <li><a href="/buyer/special">Special</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" id="username" data-toggle="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             {% if current_user.is_authenticated == true%}
                             {{ current_user.username }}
                             {% else %}
@@ -150,7 +146,7 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/buyer/setting">setting</a></li>
+                            <li><a href="/seller/setting">setting</a></li>
                             <li class="divider"></li>
                             <li><a href="/user/logout">logout</a></li>
                         </ul>
@@ -162,24 +158,22 @@
 
     <div class="container-info">
     </div>
+    <div class="text-center">
+        <div class="btn-group button-container" data-toggle="buttons">
+            <button type='button' class='btn btn-warning btn-lg info-button change-button' id="price">
+            <span class='glyphicon glyphicon-usd'></span>ChangePrice</button>
+            <button type='button' class='btn btn-warning btn-lg info-button change-button' id ="description">
+            <span class='glyphicon glyphicon-tag'></span>ChangeDescription</button>
+            <button type='button' class='btn btn-warning btn-lg info-button change-button' id ="name">
+            <span class='glyphicon glyphicon-bookmark'></span>ChangeName</button>
 
-    <button type='button' class='btn btn-warning btn-lg info-button cart-button'>
-    <span class='glyphicon glyphicon-shopping-cart'></span>Add to Cart</button>
+        </div>
+    </div>
 
 </body>
 
 <script>
     $(document).ready(function(){
-        /*
-        var title = document.createElement("p");
-        title.setAttribute("class", "des-title");
-        title.innerHTML = "IPhoneX";
-        $(".container-info").append(title);
-        var content = document.createElement("p");
-        content.setAttribute("class", "des-content");
-        content.innerHTML = "A good smart phone made by Apple, 90%new, convenient to use";
-        $(".container-info").append(content);
-        */
         var url = window.location.href;
         var goodsid = url.split("=")[1];
         $(".container-info").attr("id", goodsid);
@@ -208,33 +202,88 @@
         })
     })
 
-    $(".cart-button").click(function(){
-        console.log("cartbutton clicked");
+    $("#description").click(function(){
         var url = window.location.href;
         var goodsid = url.split("=")[1];
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:5000/buyer/add',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify({goodsid: goodsid}),
-            success: function(res) {
-                console.log(res);
-                var code = res['response_code'];
-                if (code == 0){
-                    alert("Add to Cart Successfully!!");
-                    window.location.href = '/buyer/cart';
+        var data = prompt("Input New Description!!");
+        if (data != "") {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/seller/change',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({type: "description", content: data, goodsid: goodsid}),
+                success: function(res){
+                    console.log(res);
+                    if (res['response_code'] == 0) {
+                        alert("Successful!!");
+                        window.href.location = "/seller/selling";
+                    }
+                    else {
+                        alert("Failed!!");
+                    }
                 }
-                else if (code == 1) {
-                    alert("Already in Your Cart!!");
-                }
-                else {
-                    alert("Failed!!");
-                }
-            }
-        })
-        window.location.href = '/buyer/cart';
+            })
+        }
+        else
+            alert("Can't be Empty!!");
     })
+
+    $("#name").click(function(){
+        var url = window.location.href;
+        var goodsid = url.split("=")[1];
+        var data = prompt("Input New Name!!");
+        if (data != "") {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/seller/change',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({type: "goodname", content: data, goodsid: goodsid}),
+                success: function(res){
+                    console.log(res);
+                    if (res['response_code'] == 0) {
+                        alert("Successful!!");
+                        window.href.location = "/seller/selling";
+                    }
+                    else {
+                        alert("Failed!!");
+                    }
+                }
+            })
+        }
+        else
+            alert("Can't be Empty!!");
+    })
+
+    $("#price").click(function(){
+        var url = window.location.href;
+        var goodsid = url.split("=")[1];
+        var reg = /^[1-9][0-9]+$/gi;
+        var data = prompt("Input New Price!!");
+        if (reg.test(data)) {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/seller/change',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({type: "price", content: data, goodsid: goodsid}),
+                success: function(res){
+                    console.log(res);
+                    if (res['response_code'] == 0) {
+                        alert("Successful!!");
+                        window.href.location = "/seller/selling";
+                    }
+                    else {
+                        alert("Failed!!");
+                    }
+                }
+            })
+        }
+        else
+            alert("Please input NUM!!");
+    })
+
 
 </script>
 </html>

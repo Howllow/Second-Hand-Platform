@@ -63,11 +63,11 @@
                 <input class="form-control" id="username" placeholder="Enter your username ">
             </div>
             <div class="form-group ">
-                <label for="password">Password</label>
+                <label for="password1">Password</label>
                 <input type="password" class="form-control" id="password1" placeholder="Password ">
             </div>
             <div class="form-group ">
-                <label for="password">Reapeat Your Password</label>
+                <label for="password2">Reapeat Your Password</label>
                 <input type="password" class="form-control" id="password2" placeholder="Repeat Your Password ">
             </div>
             <div class="form-group">
@@ -76,7 +76,7 @@
             </div>
             <div class="form-group ">
                 <label for="phone">Phone Number</label>
-                <input class="form-control" id="phone" placeholder="Phone Number">
+                <input class="form-control" id="phone" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="Phone Number">
             </div>
             <div class="form-group ">
                 <label for="gender">Gender</label>
@@ -88,7 +88,7 @@
             </div>
             <div class="form-group ">
                     <label for="ident">Age</label>
-                    <input class="form-control" id="age" placeholder="Age, 5-100">
+                    <input class="form-control" id="age" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="Age, 5-100">
             </div>
             
 

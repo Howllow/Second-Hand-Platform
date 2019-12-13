@@ -190,6 +190,81 @@ def buyer_setting():
     return render_template('buyer_setting.html')
 
 
+@app.route('/seller/home', methods=['GET'])
+@fl.login_required
+def seller_home():
+    return render_template('seller_home.html')
+
+
+@app.route('/seller/sell', methods=['POST', 'GET'])
+@fl.login_required
+def seller_sell():
+    if request.method == 'GET':
+        return render_template('seller_sell.html')
+
+    elif request.method == 'POST':
+        data = request.get_json()
+        data['username'] = fl.current_user.username
+        return json.dumps(sell_good(data, db))
+
+
+@app.route('/seller/selling', methods=['POST', 'GET'])
+@fl.login_required
+def seller_selling():
+    if request.method == 'GET':
+        return render_template('seller_selling.html')
+
+    elif request.method == 'POST':
+        data = request.get_json()
+        data['username'] = fl.current_user.username
+        return json.dumps(selling_good(data, db))
+
+
+@app.route('/seller/goodinfo', methods=['POST', 'GET'])
+@fl.login_required
+def seller_goodinfo():
+    if request.method == 'GET':
+        return render_template('seller_goodinfo.html')
+
+    elif request.method == 'POST':
+        data = request.get_json()
+        info_message = find_info(data, db)
+
+        return json.dumps(info_message)
+
+
+@app.route('/seller/change', methods=['POST'])
+@fl.login_required
+def seller_change():
+    data = request.get_json()
+    return json.dumps(change_good(data, db))
+
+
+@app.route('/seller/setting', methods=['GET'])
+@fl.login_required
+def seller_setting():
+    return render_template('seller_setting.html')
+
+
+@app.route('/seller/sold', methods=['GET', 'POST'])
+@fl.login_required
+def seller_sold():
+    if request.method == 'GET':
+        return render_template('seller_sold.html')
+
+    elif request.method == 'POST':
+        data = request.get_json()
+        data['username'] = fl.current_user.username
+        return json.dumps(sold_good(data, db))
+
+
+@app.route('/cancel', methods=['POST'])
+@fl.login_required
+def seller_cancel():
+    data = request.get_json()
+    return json.dumps(cancel_good(data, db))
+
+
 @app.route('/user/logout', methods=['POST', 'GET'])
 @fl.login_required
 def logout():

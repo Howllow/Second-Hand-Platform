@@ -180,13 +180,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="/buyer/goods">Goods</a></li>
                             <li class="divider"></li>
-                            <li><a href="/buyer/tuhao">Tuhao Buyer</a></li>
-                            <li class="divider"></li>
-                            <li><a href="/buyer/hotseller">Hot Seller</a></li>
-                            <li class="divider"></li>
-                            <li><a href="/buyer/similar">Similar Buyer</a></li>
-                            <li class="divider"></li>
-                            <li><a href="/buyer/audience">Seller Audience</a></li>
+                            <li><a href="/buyer/special">Special</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -215,75 +209,6 @@
 
 <script>
     $(document).ready(function(){
-        /*
-        var list = document.createElement("li");
-        list.setAttribute("class", "good-list");
-        list.setAttribute("id", "good-list");
-        $(".container-goods").append(list);
-        for (var i = 0; i < 10; i++) {
-            var good_name = "IPhoneX";
-            var good_seller = "howllow";
-            var myDate = new Date();
-            var order_time = myDate.toLocaleString();
-            var good = document.createElement("ul");
-            good.setAttribute("class", "good-item");
-            good.setAttribute("href", "#");
-            good.setAttribute("id", good_name);
-            good.innerHTML="<li class='good-name'>" + good_name + "</li>" +
-            "<li class='good-seller'>Seller:" + good_seller + "</li>" +
-            "<li class='good-time'>Time:" + order_time + "</li>" +
-            "<button type='button' class='btn btn-info btn-lg return-button'>" +
-            "<span class='glyphicon glyphicon-remove'></span>Return</button>" +
-            "<button type='button' class='btn btn-info btn-lg comment-button'>" +
-            "<span class='glyphicon glyphicon-comment'></span>Comment</button>";
-            $(".good-list").append(good);
-        }
-        */
-
-        $(".comment-button").bind("click", function(){
-            console.log("comment button clicked");
-            console.log($(this).parent().attr("id"))
-            var comment = prompt("What you wanna say?");
-            $.ajax({
-                type: 'POST',
-                url: 'http://localhost:5000/buyer/comment',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify({goodsid: $(this).parent().attr(id), comment: comment}),
-                success: function(res){
-                    console.log(res);
-                    if (res['response_code'] == 0) {
-                        alert("Comment Successful!!");
-                        window.location.href = "/buyer/home";
-                    }
-                    else {
-                        alert("Failed!!");
-                    }
-                }
-            })
-        })
-
-        $(".return-button").bind("click", function(){
-            console.log("return button clicked");
-            $.ajax({
-                type: 'POST',
-                url: 'http://localhost:5000/buyer/return',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify({goodsid: $(this).parent().attr(id)}),
-                success: function(res){
-                    console.log(res);
-                    if (res['response_code'] == 0) {
-                        alert("Successful!!");
-                        window.location.href = "/buyer/home";
-                    }
-                    else {
-                        alert("Failed!!");
-                    }
-                }
-            })
-        })
-
         $.ajax({
             type: 'POST',
             url: 'http://localhost:5000/buyer/bought',
