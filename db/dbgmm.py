@@ -166,7 +166,7 @@ def find_goods(data: dict, conn: Connection):
     cursor = conn.cursor()
     sql = F"select G.goodname, U.nickname, G.price, G.goodsid from goods as G, users as U "\
           F"where sold=0 and type = '{data['type']}' and U.username=G.seller "\
-          F"ORDER BY G.uptime ASC;"
+          F"ORDER BY G.uptime DESC;"
     cursor.execute(sql)
     rows = cursor.fetchall()
     cursor.close()
@@ -288,7 +288,7 @@ def find_cart(data: dict, conn: Connection):
     cursor = conn.cursor()
     sql = F"select G.goodname, U.nickname, G.price, G.goodsid from goods as G, cart as C, users as U "\
           F"where C.username='{data['username']}' and G.goodsid=C.goodsid and U.username=G.seller "\
-          F"ORDER BY G.uptime ASC;"
+          F"ORDER BY G.uptime DESC;"
 
     cursor.execute(sql)
     rows = cursor.fetchall()
@@ -400,7 +400,7 @@ def find_bought(data: dict, conn: Connection):
     cursor = conn.cursor()
     sql = F"select G.goodname, U.nickname, O.time, G.goodsid from goods as G, orders as O, users as U "\
           F"where O.buyer='{data['username']}' and G.goodsid = O.goodsid and U.username=G.seller "\
-          F"ORDER BY O.time ASC;"
+          F"ORDER BY O.time DESC;"
     cursor.execute(sql)
     rows = cursor.fetchall()
 
@@ -578,7 +578,7 @@ def selling_good(data: dict, conn: Connection):
     cursor = conn.cursor()
     sql = F"select goodname, price, type, goodsid from goods "\
           F"where seller = '{username}' and sold = 0 "\
-          F"ORDER BY type, uptime ASC;"
+          F"ORDER BY type, uptime DESC;"
 
     cursor.execute(sql)
     rows = cursor.fetchall()
@@ -610,7 +610,7 @@ def cancel_good(data: dict, conn: Connection):
 
     cancel_message = dict()
 
-    if not check(['goodsid'], data, 'cacel good'):
+    if not check(['goodsid'], data, 'cancel good'):
         cancel_message['response_code'] = 1
         return cancel_message
 
@@ -703,3 +703,100 @@ def sold_good(data: dict, conn :Connection):
 
     return sold_message
 
+
+def get_request(conn: Connection):
+    """
+       :param conn:
+           pymysql connection
+       :return:
+           req_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+               req_list：nickname, phone, gender, age, id
+    """
+    req_message = dict()
+    cursor = conn.cursor()
+    sql = F"select nickname, phone, gender, age, idrequests from requests;"
+
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    cursor.close()
+
+    req_list = [row for row in rows]
+    req_message['response_code'] = 0
+    req_message['req_list'] = req_list
+
+    return req_message
+
+
+def req_manage(data: dict, conn: Connection):
+    """
+       :param data:
+           python dictionary, containing keys as follows:
+                   idrequests: string
+                   agree: string
+
+       :param conn:
+           pymysql connection
+       :return:
+           manage_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+    """
+    manage_message = dict()
+    if not check(['idrequests', 'agree'], data, "req manage"):
+        manage_message['response_code'] = 1
+        return manage_message
+
+    cursor = conn.cursor()
+
+    if int(data['agree']) == 1:
+        sql = F"select username, password, nickname, phone, gender, age from requests "\
+              F"where idrequests = {data['idrequests']};"
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        row = rows[0]
+        sql = F"insert into users(username, password, authority, nickname, phone, gender, age) "\
+              F"VALUE('{row[0]}', '{row[1]}', 1, '{row[2]}', '{row[3]}', '{row[4]}', {row[5]});"
+        cursor.execute(sql)
+        conn.commit()
+
+    sql = F"delete from requests where idrequests = {data['idrequests']};"
+    cursor.execute(sql)
+
+    conn.commit()
+    cursor.close()
+
+    manage_message['response_code'] = 0
+    return manage_message
+
+
+def get_orders(conn: Connection):
+    """
+       :param conn:
+           pymysql connection
+       :return:
+           od_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+               od_list：seller, buyer, goodname, price, time
+    """
+    od_message = dict()
+
+    cursor = conn.cursor()
+    sql = F"select G.seller, O.buyer, G.goodname, G.price, O.time "\
+          F"from orders as O, goods as G "\
+          F"where O.goodsid = G.goodsid " \
+          F"ORDER BY O.time DESC;"
+
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    cursor.close()
+
+    od_message['response_code'] = 0
+    od_message['od_list'] = [row for row in rows]
+
+    return od_message

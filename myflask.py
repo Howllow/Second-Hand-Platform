@@ -258,6 +258,58 @@ def seller_sold():
         return json.dumps(sold_good(data, db))
 
 
+@app.route('/admin/home', methods=['GET'])
+@fl.login_required
+def admin_home():
+    return render_template('admin_home.html')
+
+
+@app.route('/admin/request', methods=['GET', 'POST'])
+@fl.login_required
+def admin_request():
+    if request.method == 'GET':
+        return render_template('admin_request.html')
+
+    elif request.method == 'POST':
+        return json.dumps(get_request(db))
+
+
+@app.route('/admin/manage', methods=['POST'])
+@fl.login_required
+def admin_agree():
+    data = request.get_json()
+    return json.dumps(req_manage(data, db))
+
+
+@app.route('/admin/orders', methods=['GET', 'POST'])
+@fl.login_required
+def admin_orders():
+    if request.method == 'GET':
+        return render_template('admin_orders.html')
+
+    elif request.method == 'POST':
+        return json.dumps(get_orders(db))
+
+
+@app.route('/admin/setting', methods=['GET', 'POST'])
+@fl.login_required
+def admin_setting():
+    if request.method == 'GET':
+        return render_template('admin_setting.html')
+
+
+@app.route('/admin/goods', methods=['GET'])
+@fl.login_required
+def admin_goods():
+    return render_template('admin_goods.html')
+
+
+@app.route('/admin/goodinfo', methods=['GET'])
+@fl.login_required
+def admin_goodinfo():
+    return render_template('admin_goodinfo.html')
+
+
 @app.route('/cancel', methods=['POST'])
 @fl.login_required
 def seller_cancel():
