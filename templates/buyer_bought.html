@@ -179,8 +179,6 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="/buyer/goods">Goods</a></li>
-                            <li class="divider"></li>
-                            <li><a href="/buyer/special">Special</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -258,7 +256,7 @@
                                 console.log(res);
                                 if (res['response_code'] == 0) {
                                     alert("Comment Successful!!");
-                                    window.location.href = "/buyer/home";
+                                    window.location.href = "/buyer/bought";
                                 }
                                 else {
                                     alert("Failed!!");
@@ -279,7 +277,7 @@
                                 console.log(res);
                                 if (res['response_code'] == 0) {
                                     alert("Successful!!");
-                                    window.location.href = "/buyer/home";
+                                    window.location.href = "/buyer/bought";
                                 }
                                 else {
                                     alert("Failed!!");

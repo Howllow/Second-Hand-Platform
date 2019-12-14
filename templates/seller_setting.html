@@ -83,15 +83,6 @@
                     <li><a href="/seller/selling">SellingItems</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Search
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/buyer/special">Special</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             {% if current_user.is_authenticated == true%}
                             {{ current_user.username }}
                             {% else %}

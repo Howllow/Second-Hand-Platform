@@ -179,8 +179,6 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="/buyer/goods">Goods</a></li>
-                            <li class="divider"></li>
-                            <li><a href="/buyer/special">Special</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -209,29 +207,6 @@
 
 <script>
     $(document).ready(function(){
-        /*
-        var list = document.createElement("li");
-        list.setAttribute("class", "good-list");
-        list.setAttribute("id", "good-list");
-        $(".container-goods").append(list);
-        for (var i = 0; i < 10; i++) {
-            var good_name = "IPhoneX" + i;
-            var good_seller = "howllow";
-            var good_price = "5500";
-            var good = document.createElement("ul");
-            good.setAttribute("class", "good-item");
-            good.setAttribute("href", "#");
-            good.setAttribute("id", good_name);
-            good.innerHTML="<li class='good-name'>" + good_name + "</li>" +
-            "<li class='good-seller'>Seller:" + good_seller + "</li>" +
-            "<li class='good-price'>￥" + good_price + "</li>" +
-            "<button type='button' class='btn btn-info btn-lg buy-button' id=good_name>" +
-            "<span class='glyphicon glyphicon-usd'></span>Buy</button>" +
-            "<button type='button' class='btn btn-info btn-lg remove-button'>" +
-            "<span class='glyphicon glyphicon-remove'></span>Remove</button>";
-            $(".good-list").append(good);
-        }
-        */
         $(".buy-button").bind('click', function(){
             console.log("buy button clicked");
             console.log($(this).parent().attr("id"));
@@ -303,7 +278,7 @@
                                 console.log(res);
                                 if (res['response_code'] == 0) {
                                     alert("Successful!!");
-                                    window.location.href = "/buyer/home";
+                                    window.location.href = "/buyer/cart";
                                 }
                                 else {
                                     alert("Failed!!");
@@ -324,7 +299,7 @@
                                 console.log(res);
                                 if (res['response_code'] == 0) {
                                     alert("Successful!!");
-                                    window.location.href = "/buyer/home";
+                                    window.location.href = "/buyer/cart";
                                 }
                                 else {
                                     alert("Failed!!");
