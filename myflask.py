@@ -310,11 +310,42 @@ def admin_goodinfo():
     return render_template('admin_goodinfo.html')
 
 
+@app.route('/admin/special', methods=['GET'])
+@fl.login_required
+def admin_special():
+    return render_template('admin_special.html')
+
+
 @app.route('/cancel', methods=['POST'])
 @fl.login_required
 def seller_cancel():
     data = request.get_json()
     return json.dumps(cancel_good(data, db))
+
+
+@app.route('/tuhao', methods=['POST'])
+@fl.login_required
+def special_tuhao():
+    return json.dumps(tuhao_buyer(db))
+
+
+@app.route('/similar', methods=['POST'])
+@fl.login_required
+def special_similar():
+    data = request.get_json()
+    return json.dumps(similar_buyer(data, db))
+
+
+@app.route('/audience', methods=['POST'])
+@fl.login_required
+def special_audience():
+    return json.dumps(get_audience(db))
+
+
+@app.route('/hot', methods=['POST'])
+@fl.login_required
+def special_hot():
+    return json.dumps(get_hot(db))
 
 
 @app.route('/user/logout', methods=['POST', 'GET'])

@@ -578,7 +578,7 @@ def selling_good(data: dict, conn: Connection):
     cursor = conn.cursor()
     sql = F"select goodname, price, type, goodsid from goods "\
           F"where seller = '{username}' and sold = 0 "\
-          F"ORDER BY type, uptime DESC;"
+          F"ORDER BY type ASC, uptime DESC;"
 
     cursor.execute(sql)
     rows = cursor.fetchall()
@@ -687,7 +687,7 @@ def sold_good(data: dict, conn :Connection):
     print(data)
     sql = F"select G.goodname, U.nickname, O.time, G.comment from goods as G, orders as O, users as U "\
           F"where G.goodsid = O.goodsid and G.seller = '{data['username']}' and U.username = O.buyer "\
-          F"ORDER BY O.time, U.nickname;"
+          F"ORDER BY O.time DESC, U.nickname ASC;"
     cursor = conn.cursor()
     cursor.execute(sql)
 
@@ -800,3 +800,228 @@ def get_orders(conn: Connection):
     od_message['od_list'] = [row for row in rows]
 
     return od_message
+
+
+def tuhao_buyer(conn: Connection):
+    """
+       :param conn:
+           pymysql connection
+       :return:
+           th_message:
+               response_code:
+                   0 for success
+               good_list：username, gender, age, total
+    """
+
+    th_message = dict()
+    cursor = conn.cursor()
+
+    sql = F"select b, n, g, a, p from "\
+          F"(select O.buyer as b, U.nickname as n, U.gender as g, U.age as a, sum(G.price) as p "\
+          F"from orders as O, users as U, goods as G "\
+          F"where O.goodsid = G.goodsid and O.buyer = U.username "\
+          F"GROUP BY b, g, a) as info "\
+          F"ORDER BY p DESC, b DESC;"
+
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    cursor.close()
+
+    good_list = []
+    for row in rows:
+        good_list.append([row[0], row[1], row[2], row[3],int(row[4])])
+
+    th_message['good_list'] = good_list
+    th_message['response_code'] = 0
+
+    return th_message
+
+
+def similar_buyer(data: dict, conn: Connection):
+    """
+       :param conn:
+           pymysql connection
+       :param data:
+          python dictionary, containing keys as follows:
+               username: string
+       :return:
+           sm_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+                   2 for not found
+                   3 for haven't bought
+               usr_list: username, nickname, gender, age, phonenum
+    """
+
+    sm_message = dict()
+    if not check(['username'], data, "similar buyer"):
+        sm_message['response_code'] = 1
+        return sm_message
+
+    cursor = conn.cursor()
+
+    sql = F"select username from users where authority = 0;"
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    rows = [row[0] for row in rows]
+    if data['username'] not in rows:
+        cursor.close()
+        logging.debug(F'user {data["username"]} not found')
+        sm_message['response_code'] = 2
+        return sm_message
+
+    sql = F"select buyer from orders;"
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    rows = [row[0] for row in rows]
+    if data['username'] not in rows:
+        cursor.close()
+        logging.debug(F'user {data["username"]} not buy')
+        sm_message['response_code'] = 3
+        return sm_message
+
+    target = data['username']
+
+    sql = F"select U.username, U.nickname, U.gender, U.age, U.phone, count(*) as c "\
+          F"from users as U, orders as O "\
+          F"where not exists( "\
+          F"select G.seller "\
+          F"from goods as G, orders as OO "\
+          F"where G.goodsid = OO.goodsid and OO.buyer = '{target}' and "\
+          F"G.seller not in( "\
+          F"select G.seller "\
+          F"from goods as G, orders as OO "\
+          F"where G.goodsid = OO.goodsid and OO.buyer = U.username)) "\
+          F"and not exists( "\
+          F"select G.seller "\
+          F"from goods as G, orders as OO "\
+          F"where G.goodsid = OO.goodsid and OO.buyer = U.username and "\
+          F"G.seller not in( "\
+          F"select G.seller "\
+          F"from goods as G, orders as OO "\
+          F"where G.goodsid = OO.goodsid and OO.buyer = '{target}')) "\
+          F"and U.username = O.buyer "\
+          F"and U.username <> '{target}' "\
+          F"GROUP BY O.buyer "\
+          F"ORDER BY c DESC, username DESC;"
+
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    cursor.close()
+
+    usr_list = []
+    for row in rows:
+        usr_list.append([row[0], row[1], row[2], row[3], row[4], row[5]])
+
+    sm_message['response_code'] = 0
+    sm_message['usr_list'] = usr_list
+    return sm_message
+
+
+def get_audience(conn: Connection):
+    """
+       :param conn:
+           pymysql connection
+       :return:
+           ad_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+               usr_list: username, nickname, teen, mid, old
+    """
+    ad_message = dict()
+
+    cursor = conn.cursor()
+
+    sql = F"select username, nickname from users where authority = 1;"
+    cursor.execute(sql)
+
+    rows = cursor.fetchall()
+    names = [(row[0], row[1]) for row in rows]
+
+    usr_list = []
+    for name in names:
+        sql = F"select count(teen.t) from "\
+              F"(select distinct U.username as t "\
+              F"from users as U, orders as O, goods as G "\
+              F"where O.goodsid = G.goodsid "\
+              F"and G.seller = '{name[0]}' "\
+              F"and O.buyer = U.username "\
+              F"and U.age < 30) as teen; "
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        teencnt = rows[0][0]
+
+        sql = F"select count(mid.t) from " \
+              F"(select distinct U.username as t " \
+              F"from users as U, orders as O, goods as G " \
+              F"where O.goodsid = G.goodsid " \
+              F"and G.seller = '{name[0]}' " \
+              F"and O.buyer = U.username " \
+              F"and U.age >= 30 and U.age < 50) as mid; "
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        midcnt = rows[0][0]
+
+        sql = F"select count(senior.t) from " \
+              F"(select distinct U.username as t " \
+              F"from users as U, orders as O, goods as G " \
+              F"where O.goodsid = G.goodsid " \
+              F"and G.seller = '{name[0]}' " \
+              F"and O.buyer = U.username " \
+              F"and U.age >= 50) as senior; "
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        oldcnt = rows[0][0]
+
+        usr_list.append([name[0], name[1], teencnt, midcnt, oldcnt])
+
+    cursor.close()
+    ad_message['response_code'] = 0
+    ad_message['usr_list'] = usr_list
+
+    return ad_message
+
+
+def get_hot(conn: Connection):
+    """
+       :param conn:
+           pymysql connection
+       :return:
+           ht_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+               usr_list: username, nickname, gender, age, total
+    """
+    ht_message = dict()
+
+    cursor = conn.cursor()
+    sql = F"select a, nickname, gender, age , b from "\
+          F"(select U.username as a, count(G.comment) as b "\
+          F"from goods as G, users as U "\
+          F"where U.authority = 1 "\
+          F"and G.seller = U.username "\
+          F"GROUP BY G.seller) as comm, Users "\
+          F"where b > (select avg(b) from "\
+          F"(select U.username as a, count(G.comment) as b "\
+          F"from goods as G, users as U "\
+          F"where U.authority = 1 " \
+          F"and G.seller = U.username " \
+          F"GROUP BY G.seller) as comm) and a = username "\
+          F"ORDER BY b DESC;"
+
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    cursor.close()
+
+    usr_list = []
+    for row in rows:
+        usr_list.append([row[0], row[1], row[2], row[3], row[4]])
+
+    ht_message['usr_list'] = usr_list
+    ht_message['response_code'] = 0
+
+    return ht_message
+
