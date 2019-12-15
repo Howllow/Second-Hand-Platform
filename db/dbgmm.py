@@ -1004,7 +1004,7 @@ def get_hot(conn: Connection):
           F"where U.authority = 1 "\
           F"and G.seller = U.username "\
           F"GROUP BY G.seller) as comm, Users "\
-          F"where b > (select avg(b) from "\
+          F"where b >= (select avg(b) from "\
           F"(select U.username as a, count(G.comment) as b "\
           F"from goods as G, users as U "\
           F"where U.authority = 1 " \

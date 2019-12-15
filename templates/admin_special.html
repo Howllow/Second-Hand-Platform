@@ -277,6 +277,15 @@
                     list.setAttribute("class", "good-list");
                     list.setAttribute("id", "good-list");
                     $(".container-goods").append(list);
+                    var good = document.createElement("ul");
+                    good.setAttribute("class", "good-item");
+                    good.setAttribute("href", "#");
+                    good.innerHTML="<li class='buyer-name' style='border:none; font-size:25px'>Username:" +  "</li>" +
+                    "<li class='buyer-nickname' style='border:none; font-size:25px'>Nickname:" +  "</li>" +
+                    "<li class='buyer-gender' style='border:none; font-size:25px'>Gender:" +  "</li>" +
+                    "<li class='buyer-age' style='border:none; font-size:25px'>Age:" +  "</li>" +
+                    "<li class='buyer-total' style='border:none; font-size:25px'>Total:" +  "</li>";
+                    $(".good-list").append(good);
                     for (var i = 0; i < good_list.length; i++) {
                         var buyer_name = good_list[i][0];
                         var buyer_nick = good_list[i][1];
@@ -289,11 +298,11 @@
                         var good = document.createElement("ul");
                         good.setAttribute("class", "good-item");
                         good.setAttribute("href", "#");
-                        good.innerHTML="<li class='buyer-name'>Username:" + buyer_name + "</li>" +
-                        "<li class='buyer-nickname'>Nickname:" + buyer_nick + "</li>" +
-                        "<li class='buyer-gender'>Gender:" + buyer_gender + "</li>" +
-                        "<li class='buyer-age'>Age:" + buyer_age + "</li>" +
-                        "<li class='buyer-total'>Total:￥" + buyer_total + "</li>";
+                        good.innerHTML="<li class='buyer-name'>" + buyer_name + "</li>" +
+                        "<li class='buyer-nickname'>" + buyer_nick + "</li>" +
+                        "<li class='buyer-gender'>" + buyer_gender + "</li>" +
+                        "<li class='buyer-age'>" + buyer_age + "</li>" +
+                        "<li class='buyer-total'>￥" + buyer_total + "</li>";
                         $(".good-list").append(good);
                     }
                 }
@@ -338,6 +347,16 @@
                         list.setAttribute("class", "good-list");
                         list.setAttribute("id", "good-list");
                         $(".container-goods").append(list);
+                        var good = document.createElement("ul");
+                        good.setAttribute("class", "good-item");
+                        good.setAttribute("href", "#");
+                        good.innerHTML = "<li class='buyer-name' style='border:none; font-size:25px'>Usr:" +  "</li>" +
+                            "<li class='buyer-nickname' style='border:none; font-size:25px'>Nick:" +  "</li>" +
+                            "<li class='buyer-gender' style='border:none; font-size:25px'>Gender:" +  "</li>" +
+                            "<li class='buyer-age' style='border:none; font-size:25px'>Age:" +  "</li>" +
+                            "<li class='buyer-total' style='border:none; font-size:25px'>Phone:" +  "</li>"+
+                            "<li class='buyer-age' style='border:none; font-size:25px'>ItemCnt:"+  "</li>";
+                        $(".good-list").append(good);
                         for (var i = 0; i < good_list.length; i++) {
                             var buyer_name = good_list[i][0];
                             var buyer_nickname = good_list[i][1];
@@ -350,12 +369,12 @@
                             var good = document.createElement("ul");
                             good.setAttribute("class", "good-item");
                             good.setAttribute("href", "#");
-                            good.innerHTML = "<li class='buyer-name'>Usr:" + buyer_name + "</li>" +
-                                "<li class='buyer-nickname'>Nick:" + buyer_nickname + "</li>" +
-                                "<li class='buyer-gender'>Gender:" + buyer_gender + "</li>" +
-                                "<li class='buyer-age'>Age:" + buyer_age + "</li>" +
-                                "<li class='buyer-total'>Phone:" + buyer_phone + "</li>"+
-                                "<li class='buyer-age'>ItemCnt:"+ good_list[i][5] + "</li>";
+                            good.innerHTML = "<li class='buyer-name'>" + buyer_name + "</li>" +
+                                "<li class='buyer-nickname'>" + buyer_nickname + "</li>" +
+                                "<li class='buyer-gender'>" + buyer_gender + "</li>" +
+                                "<li class='buyer-age'>" + buyer_age + "</li>" +
+                                "<li class='buyer-total'>" + buyer_phone + "</li>"+
+                                "<li class='buyer-age'>"+ good_list[i][5] + "</li>";
                             $(".good-list").append(good);
                         }
                     }
@@ -390,6 +409,16 @@
                         list.setAttribute("class", "good-list");
                         list.setAttribute("id", "good-list");
                         $(".container-goods").append(list);
+                         var good = document.createElement("ul");
+                         good.setAttribute("class", "good-item");
+                         good.setAttribute("href", "#");
+                         good.innerHTML = "<li class='buyer-name' style='border:none; font-size:25px'>Usr:" +  "</li>" +
+                            "<li class='buyer-nickname' style='border:none; font-size:25px'>Nick:" +  "</li>" +
+                            "<li class='buyer-gender' style='border:none; font-size:25px'>Teen:" +  "</li>" +
+                            "<li class='buyer-age' style='border:none; font-size:25px'>MidAged:" +  "</li>" +
+                            "<li class='buyer-age' style='border:none; font-size:25px'>Old:" +  "</li>"+
+                            "<li class='buyer-total' style='border:none; font-size:25px'>Total:"+  "</li>";
+                         $(".good-list").append(good);
                         for (var i = 0; i < good_list.length; i++) {
                             var buyer_name = good_list[i][0];
                             var buyer_nickname = good_list[i][1];
@@ -399,12 +428,12 @@
                             var good = document.createElement("ul");
                             good.setAttribute("class", "good-item");
                             good.setAttribute("href", "#");
-                            good.innerHTML = "<li class='buyer-name'>Usr:" + buyer_name + "</li>" +
-                                "<li class='buyer-nickname'>Nick:" + buyer_nickname + "</li>" +
-                                "<li class='buyer-gender'>Teen:" + buyer_teen + "</li>" +
-                                "<li class='buyer-age'>MidAged:" + buyer_mid + "</li>" +
-                                "<li class='buyer-age'>Old:" + buyer_old + "</li>"+
-                                "<li class='buyer-total'>Total:"+ (buyer_teen + buyer_mid + buyer_old) + "</li>";
+                            good.innerHTML = "<li class='buyer-name'>" + buyer_name + "</li>" +
+                                "<li class='buyer-nickname'>" + buyer_nickname + "</li>" +
+                                "<li class='buyer-gender'>" + buyer_teen + "</li>" +
+                                "<li class='buyer-age'>" + buyer_mid + "</li>" +
+                                "<li class='buyer-age'>" + buyer_old + "</li>"+
+                                "<li class='buyer-total'>"+ (buyer_teen + buyer_mid + buyer_old) + "</li>";
                             $(".good-list").append(good);
                         }
                     }
@@ -432,6 +461,15 @@
                     list.setAttribute("class", "good-list");
                     list.setAttribute("id", "good-list");
                     $(".container-goods").append(list);
+                    var good = document.createElement("ul");
+                    good.setAttribute("class", "good-item");
+                    good.setAttribute("href", "#");
+                    good.innerHTML="<li class='buyer-name' style='border:none; font-size:25px'>Usr:" +  "</li>" +
+                    "<li class='buyer-nickname' style='border:none; font-size:25px'>Nick:" + "</li>" +
+                    "<li class='buyer-gender' style='border:none; font-size:25px'>Gender:" +  "</li>" +
+                    "<li class='buyer-age' style='border:none; font-size:25px'>Age:" +  "</li>" +
+                    "<li class='buyer-total' style='border:none; font-size:25px'>Total:" +  "</li>";
+                    $(".good-list").append(good);
                     for (var i = 0; i < good_list.length; i++) {
                         var buyer_name = good_list[i][0];
                         var buyer_nick = good_list[i][1];
@@ -444,11 +482,11 @@
                         var good = document.createElement("ul");
                         good.setAttribute("class", "good-item");
                         good.setAttribute("href", "#");
-                        good.innerHTML="<li class='buyer-name'>Usr:" + buyer_name + "</li>" +
-                        "<li class='buyer-nickname'>Nick:" + buyer_nick + "</li>" +
-                        "<li class='buyer-gender'>Gender:" + buyer_gender + "</li>" +
-                        "<li class='buyer-age'>Age:" + buyer_age + "</li>" +
-                        "<li class='buyer-total'>Total:" + buyer_total + "</li>";
+                        good.innerHTML="<li class='buyer-name'>" + buyer_name + "</li>" +
+                        "<li class='buyer-nickname'>" + buyer_nick + "</li>" +
+                        "<li class='buyer-gender'>" + buyer_gender + "</li>" +
+                        "<li class='buyer-age'>" + buyer_age + "</li>" +
+                        "<li class='buyer-total'>" + buyer_total + "</li>";
                         $(".good-list").append(good);
                     }
                 }

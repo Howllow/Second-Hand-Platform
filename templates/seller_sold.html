@@ -225,6 +225,14 @@
                     list.setAttribute("class", "good-list");
                     list.setAttribute("id", "good-list");
                     $(".container-goods").append(list);
+                    var good = document.createElement("ul");
+                    good.setAttribute("class", "good-item");
+                    good.setAttribute("href", "#");
+                    good.innerHTML="<li class='good-name' style='border:none; font-size:25px'>Good's Name" +  "</li>" +
+                    "<li class='good-seller' style='border:none; font-size:25px'>Seller:" +  "</li>" +
+                    "<li class='good-time' style='border:none; font-size:25px'>Order Time:" +  "</li>" +
+                    "<li class='good-comment' style='border:none; font-size:25px'>Comment:" +  "</li>";
+                    $(".good-list").append(good);
                     for (var i = 0; i < good_list.length; i++) {
                         var good_name = good_list[i][0];
                         var good_buyer = good_list[i][1];
@@ -234,8 +242,8 @@
                         good.setAttribute("class", "good-item");
                         good.setAttribute("href", "#");
                         good.innerHTML="<li class='good-name'>" + good_name + "</li>" +
-                        "<li class='good-seller'>Seller:" + good_buyer + "</li>" +
-                        "<li class='good-time'>Order Time:" + order_time + "</li>" +
+                        "<li class='good-seller'>" + good_buyer + "</li>" +
+                        "<li class='good-time'>" + order_time + "</li>" +
                         "<li class='good-comment'>" + good_comment + "</li>";
                         $(".good-list").append(good);
                     }

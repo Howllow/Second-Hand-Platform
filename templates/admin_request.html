@@ -240,6 +240,15 @@
                     list.setAttribute("class", "good-list");
                     list.setAttribute("id", "good-list");
                     $(".container-goods").append(list);
+                    var good = document.createElement("ul");
+                    good.setAttribute("class", "good-item");
+                    good.setAttribute("href", "#");
+                    good.setAttribute("id", req_id);
+                    good.innerHTML="<li class='req-name' style='border:none; font-size:25px'>NickName:" + "</li>" +
+                    "<li class='req-gender' style='border:none; font-size:25px'>Gender:" +  "</li>" +
+                    "<li class='req-age' style='border:none; font-size:25px'>Age:" +  "</li>" +
+                    "<li class='req-phone' style='border:none; font-size:25px'>Phone:" +  "</li>";
+                    $(".good-list").append(good);
                     for (var i = 0; i < good_list.length; i++) {
                         var req_nickname = good_list[i][0];
                         var req_phone = good_list[i][1];
@@ -253,10 +262,10 @@
                         good.setAttribute("class", "good-item");
                         good.setAttribute("href", "#");
                         good.setAttribute("id", req_id);
-                        good.innerHTML="<li class='req-name'>NickName:" + req_nickname + "</li>" +
-                        "<li class='req-gender'>Gender:" + req_gender + "</li>" +
-                        "<li class='req-age'>Age:" + req_age + "</li>" +
-                        "<li class='req-phone'>Phone:" + req_phone + "</li>" +
+                        good.innerHTML="<li class='req-name'>" + req_nickname + "</li>" +
+                        "<li class='req-gender'>" + req_gender + "</li>" +
+                        "<li class='req-age'>" + req_age + "</li>" +
+                        "<li class='req-phone'>" + req_phone + "</li>" +
                         "<button type='button' class='btn btn-info btn-lg agree-button'>" +
                         "<span class='glyphicon glyphicon-ok-sign'></span>Agree</button>" +
                         "<button type='button' class='btn btn-info btn-lg reject-button'>" +

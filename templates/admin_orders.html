@@ -247,6 +247,15 @@
                     list.setAttribute("class", "good-list");
                     list.setAttribute("id", "good-list");
                     $(".container-goods").append(list);
+                    var good = document.createElement("ul");
+                    good.setAttribute("class", "good-item");
+                    good.setAttribute("href", "#");
+                    good.innerHTML="<li class='od-name1' style='border:none; font-size:25px'>Seller:" + "</li>" +
+                    "<li class='od-name2' style='border:none; font-size:25px'>Buyer:" + "</li>" +
+                    "<li class='od-name3' style='border:none; font-size:25px'>Good:" + "</li>" +
+                    "<li class='od-price' style='border:none; font-size:25px'>Value:" + "</li>" +
+                    "<li class='od-time' style='border:none; font-size:25px'>Time:" + "</li>";
+                    $(".good-list").append(good);
                     for (var i = 0; i < good_list.length; i++) {
                         var od_seller = good_list[i][0];
                         var od_buyer = good_list[i][1];
@@ -256,11 +265,11 @@
                         var good = document.createElement("ul");
                         good.setAttribute("class", "good-item");
                         good.setAttribute("href", "#");
-                        good.innerHTML="<li class='od-name1'>Seller:" + od_seller + "</li>" +
-                        "<li class='od-name2'>Buyer:" + od_buyer + "</li>" +
-                        "<li class='od-name3'>Good:" + od_goodname + "</li>" +
-                        "<li class='od-price'>Price:￥" + od_price + "</li>" +
-                        "<li class='od-time'>Time:" + od_time + "</li>";
+                        good.innerHTML="<li class='od-name1'>" + od_seller + "</li>" +
+                        "<li class='od-name2'>" + od_buyer + "</li>" +
+                        "<li class='od-name3'>" + od_goodname + "</li>" +
+                        "<li class='od-price'>￥" + od_price + "</li>" +
+                        "<li class='od-time'>" + od_time + "</li>";
                         $(".good-list").append(good);
                     }
 
