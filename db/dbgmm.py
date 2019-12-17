@@ -802,6 +802,69 @@ def get_orders(conn: Connection):
     return od_message
 
 
+def manage_usr(conn: Connection):
+    """
+       :param conn:
+           pymysql connection
+
+       :return:
+           mn_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+               usr_list: nickname, phone, gender, age, username, identity
+    """
+
+    mn_message = dict()
+    cursor = conn.cursor()
+
+    sql = F"select nickname, phone, gender, age, username, authority from users "\
+          F"ORDER BY authority DESC;"
+    cursor.execute(sql)
+
+    rows = cursor.fetchall()
+    usr_list = []
+    cursor.close()
+    for row in rows:
+        usr_list.append([row[0], row[1], row[2], row[3], row[4], row[5]])
+
+    mn_message['response_code'] = 0
+    mn_message['usr_list'] = usr_list
+
+    return mn_message
+
+
+def delete_usr(data: dict, conn: Connection):
+    """
+       :param data:
+           python dictionary, containing keys as follows:
+                   username:string
+
+       :param conn:
+           pymysql connection
+       :return:
+           dl_message:
+               response_code:
+                   0 for success
+                   1 for wrong data
+    """
+
+    dl_message = dict()
+    if not check(['username'], data, "delete usr"):
+        dl_message['response_code'] = 1
+        return dl_message
+
+    cursor = conn.cursor()
+    sql = F"delete from users "\
+          F"where username = '{data['username']}';"
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+
+    dl_message['response_code'] = 0
+    return dl_message
+
+
 def tuhao_buyer(conn: Connection):
     """
        :param conn:

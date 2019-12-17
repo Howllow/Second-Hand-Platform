@@ -111,49 +111,48 @@
             height: 10%;
         }
 
-        .od-name1 {
+        .req-name {
             align-content: center;
             display:inline-block;
             vertical-align: top;
             padding: 14px;
             text-align: center;
             font-size:20px;
-            width:15%;
+            width:25%;
             height: 100%;
             color: #0f0f0f;
             font-family: "Arial Black";
             border:solid;
         }
-        .od-name2 {
+        .req-gender{
             align-content: center;
             display:inline-block;
             vertical-align: top;
+            width:15%;
+            font-size:20px;
             padding: 14px;
             text-align: center;
-            font-size:20px;
-            width:15%;
             height: 100%;
             color: #0f0f0f;
             font-family: "Arial Black";
             border:solid;
+            border-left:none;
+        }
+        .req-age {
+            align-content: center;
+            display: inline-block;
+            vertical-align: top;
+            width: 10%;
+            font-size: 20px;
+            height: 100%;
+            color: #0f0f0f;
+            font-family: "Arial Black";
+            text-align: center;
+            padding: 14px;
+            border: solid;
             border-left: none;
         }
-        .od-name3 {
-            align-content: center;
-            display:inline-block;
-            vertical-align: top;
-            padding: 14px;
-            text-align: center;
-            font-size:20px;
-            width:23%;
-            height: 100%;
-            color: #0f0f0f;
-            font-family: "Arial Black";
-            border:solid;
-            border-left: none;
-        }
-
-        .od-time {
+        .req-phone {
             align-content: center;
             display: inline-block;
             vertical-align: top;
@@ -167,20 +166,14 @@
             border: solid;
             border-left: none;
         }
-        .od-price {
-            align-content: center;
-            display: inline-block;
-            vertical-align: top;
-            width: 15%;
-            font-size: 20px;
-            height: 100%;
-            color: #0f0f0f;
-            font-family: "Arial Black";
-            text-align: center;
-            padding: 14px;
-            border: solid;
-            border-left: none;
+
+        .agree-button {
+            font-size: 18px;
         }
+        .reject-button {
+            font-size: 18px;
+        }
+
 
     </style>
 </head>
@@ -233,7 +226,7 @@
     $(document).ready(function(){
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/admin/orders',
+            url: 'http://localhost:5000/admin/manageusr',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({}),
@@ -243,7 +236,7 @@
                     alert("Failed!!");
                 }
                 else if (res['response_code'] == 0) {
-                    good_list = res['od_list'];
+                    var good_list = res['usr_list'];
                     var list = document.createElement("li");
                     list.setAttribute("class", "good-list");
                     list.setAttribute("id", "good-list");
@@ -251,29 +244,64 @@
                     var good = document.createElement("ul");
                     good.setAttribute("class", "good-item");
                     good.setAttribute("href", "#");
-                    good.innerHTML="<li class='od-name1' style='border:none; font-size:25px'>Seller:" + "</li>" +
-                    "<li class='od-name2' style='border:none; font-size:25px'>Buyer:" + "</li>" +
-                    "<li class='od-name3' style='border:none; font-size:25px'>Good:" + "</li>" +
-                    "<li class='od-price' style='border:none; font-size:25px'>Value:" + "</li>" +
-                    "<li class='od-time' style='border:none; font-size:25px'>Time:" + "</li>";
+                    good.innerHTML="<li class='req-name' style='border:none; font-size:25px'>NickName:" + "</li>" +
+                    "<li class='req-gender' style='border:none; font-size:25px'>Gender:" +  "</li>" +
+                    "<li class='req-age' style='border:none; font-size:25px'>Age:" +  "</li>" +
+                    "<li class='req-phone' style='border:none; font-size:25px'>Phone:" +  "</li>"+
+                    "<li class='req-gender' style='border:none; font-size:25px'>Identity:" +  "</li>";
                     $(".good-list").append(good);
                     for (var i = 0; i < good_list.length; i++) {
-                        var od_seller = good_list[i][0];
-                        var od_buyer = good_list[i][1];
-                        var od_goodname = good_list[i][2];
-                        var od_price = good_list[i][3];
-                        var od_time = good_list[i][4];
+                        var req_nickname = good_list[i][0];
+                        var req_phone = good_list[i][1];
+                        var req_gender;
+                        if (good_list[i][2] == 0)
+                            req_gender = "Male";
+                        else req_gender = "Female";
+                        var req_age = good_list[i][3];
+                        var req_id = good_list[i][4];
+                        var req_ident = good_list[i][5];
+                        if (req_ident == 1)
+                            req_ident = 'seller';
+                        else if (req_ident == 0)
+                            req_ident = 'buyer';
+                        else
+                            req_ident = 'admin';
                         var good = document.createElement("ul");
                         good.setAttribute("class", "good-item");
                         good.setAttribute("href", "#");
-                        good.innerHTML="<li class='od-name1'>" + od_seller + "</li>" +
-                        "<li class='od-name2'>" + od_buyer + "</li>" +
-                        "<li class='od-name3'>" + od_goodname + "</li>" +
-                        "<li class='od-price'>￥" + od_price + "</li>" +
-                        "<li class='od-time'>" + od_time + "</li>";
+                        good.setAttribute("id", req_id);
+                        good.innerHTML="<li class='req-name'>" + req_nickname + "</li>" +
+                        "<li class='req-gender'>" + req_gender + "</li>" +
+                        "<li class='req-age'>" + req_age + "</li>" +
+                        "<li class='req-phone'>" + req_phone + "</li>" +
+                        "<li class='req-gender'>" + req_ident + "</li>";
+                        if (req_ident != 'admin')
+                            good.innerHTML += "<button type='button' class='btn btn-info btn-lg delete-button'>" +
+                            "<span class='glyphicon glyphicon-remove-sign'></span>Delete</button>";
                         $(".good-list").append(good);
                     }
 
+                    $(".delete-button").bind('click', function(){
+                        console.log("reject button clicked");
+                        console.log($(this).parent().attr("id"));
+                        $.ajax({
+                            type: 'POST',
+                            url: 'http://localhost:5000/admin/delete',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify({username: $(this).parent().attr('id')}),
+                            success: function(res){
+                                console.log(res);
+                                if (res['response_code'] == 0) {
+                                    alert("Successful!!");
+                                    window.location.href = "/admin/manageusr";
+                                }
+                                else {
+                                    alert("Failed!!");
+                                }
+                            }
+                        })
+                    })
                 }
             }
         })

@@ -316,11 +316,28 @@ def admin_special():
     return render_template('admin_special.html')
 
 
+@app.route('/admin/manageusr', methods=['GET', 'POST'])
+@fl.login_required
+def admin_manageusr():
+    if request.method == 'GET':
+        return render_template('admin_manage.html')
+
+    elif request.method == 'POST':
+        return json.dumps(manage_usr(db))
+
+
 @app.route('/cancel', methods=['POST'])
 @fl.login_required
 def seller_cancel():
     data = request.get_json()
     return json.dumps(cancel_good(data, db))
+
+
+@app.route('/admin/delete', methods=['POST'])
+@fl.login_required
+def admin_delete():
+    data = request.get_json()
+    return json.dumps(delete_usr(data, db))
 
 
 @app.route('/tuhao', methods=['POST'])
