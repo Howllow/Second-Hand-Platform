@@ -9,3 +9,6 @@
 *.xml
 *.pyc
 *.pyc
+.idea/workspace.xml
+db/__pycache__/dbgmm.cpython-36.pyc
+db/__pycache__/dbgmm.cpython-36.pyc
