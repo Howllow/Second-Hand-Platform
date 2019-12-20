@@ -20,7 +20,7 @@
 
 进入项目文件夹，在命令行中输入python myflask.py即可运行平台，然后在浏览器中输入http://localhost:5000， 出现以下页面，说明成功。
 
-![image](https://github.com/Howllow/Second-Hand-Platform/blob/master/assets/1576770000960.png)
+![image](https://github.com/Howllow/Second-Hand-Platform/blob/master/1576770000960.png)
 
 ## 注册账号
 
