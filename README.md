@@ -40,5 +40,17 @@
 
 在打开的命令行中Ctrl+C即可关闭平台。
 
+## 项目文件夹中代码功能说明
 
+* 项目根目录中
+  * myflask.py可以运行平台，并处理url跳转等请求
+  * user.py定义用户类
+* templates文件夹中为各个页面的html格式
+* static文件夹中存放模板的图片
+* db文件夹中
+  * createxml.py可以动态生成商品的xml文件
+  * config.py存放连接数据库的配置文件
+  * dbgmm.py连接数据库，并进行一些数据库中的sql查询、更改等操作
+  * test.py测试数据库连接
+  * utils.py提供检查用户存在性等功能
 
