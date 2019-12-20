@@ -18,9 +18,9 @@
 
 ## 如何运行
 
-进入项目文件夹，在命令行中输入python myflask.py即可运行平台，然后在浏览器中输入http://localhost:5000，出现以下页面，说明成功。
+进入项目文件夹，在命令行中输入python myflask.py即可运行平台，然后在浏览器中输入http://localhost:5000， 出现以下页面，说明成功。
 
-![1576770000960](C:\Users\Jerry\AppData\Roaming\Typora\typora-user-images\1576770000960.png)
+![1576770000960](./assets/1576770000960.png)
 
 ## 注册账号
 
