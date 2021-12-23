@@ -30,7 +30,7 @@ def login_user(data: Dict[str, str], conn: Connection):
         return log_message
 
     cursor = conn.cursor()
-    sql = 'select username from users;'
+    sql = F"select username from users where username = '{data['username']}';"
     cursor.execute(sql)
     rows = cursor.fetchall()
     rows = [row[0] for row in rows]
@@ -165,7 +165,7 @@ def find_goods(data: dict, conn: Connection):
 
     cursor = conn.cursor()
     sql = F"select G.goodname, U.nickname, G.price, G.goodsid from goods as G, users as U "\
-          F"where sold=0 and type = '{data['type']}' and U.username=G.seller "\
+          F"where sold=0 and type = '{data['type']}' and U.username=G.seller and G.goodname like '%{data['keyword']}%'"\
           F"ORDER BY G.uptime DESC;"
     cursor.execute(sql)
     rows = cursor.fetchall()
@@ -174,8 +174,7 @@ def find_goods(data: dict, conn: Connection):
     good_message['response_code'] = 0
     good_list = []
     for row in rows:
-        if is_keyword(data['keyword'], row[0]):
-            good_list.append([row[0], row[1], row[2], row[3]])
+        good_list.append([row[0], row[1], row[2], row[3]])
 
     if len(good_list) == 0:
         good_message['response_code'] = 1

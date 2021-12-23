@@ -1,9 +1,12 @@
 from db.dbgmm import *
 from db.config import *
 from flask import *
+from db.pool import DB_Pool
 import json
+from werkzeug.middleware.proxy_fix import ProxyFix
 import flask_login as fl
 import user
+import sys
 
 app = Flask(__name__)
 login_manager = fl.LoginManager()
@@ -15,8 +18,8 @@ login_manager.session_protection = 'strong'
 app.config['SECRET_KEY'] = 'gimmemoney'
 
 password = ""
-db = pymysql.connect(**myconfig)
 
+POOL = DB_Pool()
 
 @app.route('/')
 def homepage():
@@ -29,9 +32,10 @@ def login():
         return render_template('login.html')
 
     elif request.method == 'POST':
-        data = request.get_json()
+        db = POOL.connection()
+        data = request.get_json(force=True)
         log_message = login_user(data, db)
-
+        db.close()
         if log_message['response_code'] == 0:
             usr = user.User()
             usr.username = data['username']
@@ -57,9 +61,9 @@ def register():
             data['ident'] = 0
         else:
             data['ident'] = 1
-
+        db = POOL.connection()
         reg_message = register_user(data, db)
-
+        db.close()
         return json.dumps(reg_message)
 
 
@@ -74,7 +78,9 @@ def setting():
                 data['content'] = 1
             else:
                 data['content'] = 0
+        db = POOL.connection()
         setting_message = change_setting(data, db)
+        db.close()
         return json.dumps(setting_message)
 
 
@@ -86,15 +92,15 @@ def buyer_home():
 
 
 @app.route('/buyer/goods', methods=['POST', 'GET'])
-@fl.login_required
 def buyer_goods():
     if request.method == 'GET':
         return render_template('buyer_goods.html')
 
     elif request.method == 'POST':
         data = request.get_json()
+        db = POOL.connection()
         good_message = find_goods(data, db)
-
+        db.close()
         return json.dumps(good_message)
 
 
@@ -107,7 +113,9 @@ def buyer_cart():
     elif request.method == 'POST':
         data = request.get_json()
         data['username'] = fl.current_user.username
+        db = POOL.connection()
         cart_message = find_cart(data, db)
+        db.close()
         return json.dumps(cart_message)
 
 
@@ -117,7 +125,9 @@ def buyer_add():
     if request.method == 'POST':
         data = request.get_json()
         data['username'] = fl.current_user.username
+        db = POOL.connection()
         add_message = add_cart(data, db)
+        db.close()
         return json.dumps(add_message)
 
 
@@ -126,8 +136,10 @@ def buyer_add():
 def buyer_buy():
     if request.method == 'POST':
         data = request.get_json()
-        data['username'] = fl.current_user.username
+        data['username'] = fl.current_user
+        db = POOL.connection()
         buy_message = buy_good(data, db)
+        db.close()
         return json.dumps(buy_message)
 
 
@@ -137,7 +149,9 @@ def buyer_remove():
     if request.method == 'POST':
         data = request.get_json()
         data['username'] = fl.current_user.username
+        db = POOL.connection()
         remove_message = remove_cart(data, db)
+        db.close()
         return json.dumps(remove_message)
 
 
@@ -146,7 +160,9 @@ def buyer_remove():
 def buyer_return():
     if request.method == 'POST':
         data = request.get_json()
+        db = POOL.connection()
         return_message = good_return(data, db)
+        db.close()
         return json.dumps(return_message)
 
 
@@ -154,7 +170,10 @@ def buyer_return():
 @fl.login_required
 def buyer_comment():
     data = request.get_json()
-    return json.dumps(good_comment(data, db))
+    db = POOL.connection()
+    return_message = json.dumps(good_comment(data, db))
+    db.close()
+    return return_message
 
 
 @app.route('/buyer/goodinfo', methods=['POST', 'GET'])
@@ -165,8 +184,9 @@ def good_info():
 
     elif request.method == 'POST':
         data = request.get_json()
+        db = POOL.connection()
         info_message = find_info(data, db)
-
+        db.close()
         return json.dumps(info_message)
 
 
@@ -179,8 +199,9 @@ def bought():
     elif request.method == 'POST':
         data = request.get_json()
         data['username'] = fl.current_user.username
+        db = POOL.connection()
         bought_message = find_bought(data, db)
-
+        db.close()
         return json.dumps(bought_message)
 
 
@@ -203,9 +224,12 @@ def seller_sell():
         return render_template('seller_sell.html')
 
     elif request.method == 'POST':
-        data = request.get_json()
+        data = request.get_json(force=True)
         data['username'] = fl.current_user.username
-        return json.dumps(sell_good(data, db))
+        db = POOL.connection()
+        return_message = json.dumps(sell_good(data, db))
+        db.close()
+        return return_message
 
 
 @app.route('/seller/selling', methods=['POST', 'GET'])
@@ -217,7 +241,9 @@ def seller_selling():
     elif request.method == 'POST':
         data = request.get_json()
         data['username'] = fl.current_user.username
-        return json.dumps(selling_good(data, db))
+        db = POOL.connection()
+        return_message = json.dumps(selling_good(data, db))
+        return return_message
 
 
 @app.route('/seller/goodinfo', methods=['POST', 'GET'])
@@ -228,8 +254,9 @@ def seller_goodinfo():
 
     elif request.method == 'POST':
         data = request.get_json()
+        db = POOL.connection()
         info_message = find_info(data, db)
-
+        db.close()
         return json.dumps(info_message)
 
 
@@ -237,7 +264,10 @@ def seller_goodinfo():
 @fl.login_required
 def seller_change():
     data = request.get_json()
-    return json.dumps(change_good(data, db))
+    db = POOL.connection()
+    return_message = json.dumps(change_good(data, db))
+    db.close()
+    return return_message
 
 
 @app.route('/seller/setting', methods=['GET'])
@@ -253,9 +283,12 @@ def seller_sold():
         return render_template('seller_sold.html')
 
     elif request.method == 'POST':
-        data = request.get_json()
+        data = request.get_json(force=True)
         data['username'] = fl.current_user.username
-        return json.dumps(sold_good(data, db))
+        db = POOL.connection()
+        return_message = json.dumps(sold_good(data, db))
+        db.close()
+        return return_message
 
 
 @app.route('/admin/home', methods=['GET'])
@@ -271,14 +304,20 @@ def admin_request():
         return render_template('admin_request.html')
 
     elif request.method == 'POST':
-        return json.dumps(get_request(db))
+        db = POOL.connection()
+        return_message = json.dumps(get_request(db))
+        db.close()
+        return return_message
 
 
 @app.route('/admin/manage', methods=['POST'])
 @fl.login_required
 def admin_agree():
     data = request.get_json()
-    return json.dumps(req_manage(data, db))
+    db = POOL.connection()
+    return_message = json.dumps(req_manage(data, db))
+    db.close()
+    return return_message
 
 
 @app.route('/admin/orders', methods=['GET', 'POST'])
@@ -288,7 +327,10 @@ def admin_orders():
         return render_template('admin_orders.html')
 
     elif request.method == 'POST':
-        return json.dumps(get_orders(db))
+        db = POOL.connection()
+        return_message = json.dumps(get_orders(db))
+        db.close()
+        return return_message
 
 
 @app.route('/admin/setting', methods=['GET', 'POST'])
@@ -323,46 +365,66 @@ def admin_manageusr():
         return render_template('admin_manage.html')
 
     elif request.method == 'POST':
-        return json.dumps(manage_usr(db))
+        db = POOL.connection()
+        return_message = json.dumps(manage_usr(db))
+        db.close()
+        return return_message
 
 
 @app.route('/cancel', methods=['POST'])
 @fl.login_required
 def seller_cancel():
     data = request.get_json()
-    return json.dumps(cancel_good(data, db))
+    db = POOL.connection()
+    return_message = json.dumps(cancel_good(data, db))
+    db.close()
+    return return_message
 
 
 @app.route('/admin/delete', methods=['POST'])
 @fl.login_required
 def admin_delete():
     data = request.get_json()
-    return json.dumps(delete_usr(data, db))
+    db = POOL.connection()
+    return_message = json.dumps(delete_usr(data, db))
+    db.close()
+    return return_message
 
 
 @app.route('/tuhao', methods=['POST'])
 @fl.login_required
 def special_tuhao():
-    return json.dumps(tuhao_buyer(db))
+    db = POOL.connection()
+    return_message = json.dumps(tuhao_buyer(db))
+    db.close()
+    return return_message
 
 
 @app.route('/similar', methods=['POST'])
 @fl.login_required
 def special_similar():
     data = request.get_json()
-    return json.dumps(similar_buyer(data, db))
+    db = POOL.connection()
+    return_message = json.dumps(similar_buyer(data, db))
+    db.close()
+    return return_message
 
 
 @app.route('/audience', methods=['POST'])
 @fl.login_required
 def special_audience():
-    return json.dumps(get_audience(db))
+    db = POOL.connection()
+    return_message = json.dumps(get_audience(db))
+    db.close()
+    return return_message
 
 
 @app.route('/hot', methods=['POST'])
-@fl.login_required
 def special_hot():
-    return json.dumps(get_hot(db))
+    db = POOL.connection()
+    return_message = json.dumps(get_hot(db))
+    db.close()
+    return return_message
 
 
 @app.route('/user/logout', methods=['POST', 'GET'])
@@ -377,6 +439,23 @@ def load_user(user_id):
     return user.UserManager.get(user_id)
 
 
+
+def Simple_Run():
+    app.run(host='localhost', threaded=True, debug=False, port='5000')
+
+def Guni_Run():
+    app.wsgi_app = ProxyFix(app.wsgi_app)
+
 if __name__ == '__main__':
-    app.run(host='localhost', port='5000')
+    if len(sys.argv) < 2:
+        run_type = "simple"
+    else:
+        run_type = sys.argv[1]
+    run_type = "guni"
+    if run_type == "simple":
+        Simple_Run()
+    elif run_type == "guni":
+        Guni_Run()
+    else:
+        print("Unknown Parameter")
 

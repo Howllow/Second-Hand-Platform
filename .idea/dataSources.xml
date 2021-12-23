@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="GMM@10.128.202.15" uuid="c3263268-ac82-43a4-9045-782c9815edeb">
+    <data-source source="LOCAL" name="dbgmm" uuid="eb050170-cdd5-40f2-ba88-f45b8a435a67">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://10.128.202.15:3306/GMM</jdbc-url>
+      <jdbc-url>jdbc:mysql://6.tcp.ngrok.io:15409/gmm</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />
