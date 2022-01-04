@@ -226,7 +226,7 @@
     $(document).ready(function(){
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/admin/manageusr',
+            url: 'http://192.168.86.16:800/admin/manageusr',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({}),
@@ -286,7 +286,7 @@
                         console.log($(this).parent().attr("id"));
                         $.ajax({
                             type: 'POST',
-                            url: 'http://localhost:5000/admin/delete',
+                            url: 'http://192.168.86.16:800/admin/delete',
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             data: JSON.stringify({username: $(this).parent().attr('id')}),

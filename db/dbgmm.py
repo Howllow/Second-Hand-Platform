@@ -329,7 +329,6 @@ def buy_good(data: dict, conn: Connection):
     cursor = conn.cursor()
     sql = F"insert into orders(goodsid, buyer, time) "\
           F"VALUE({data['goodsid']}, '{data['username']}', '{ntime}');"
-
     cursor.execute(sql)
     conn.commit()
 

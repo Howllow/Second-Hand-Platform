@@ -170,7 +170,7 @@
         $(".container-info").attr("id", goodsid);
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/buyer/goodinfo',
+            url: 'http://192.168.86.16:800/buyer/goodinfo',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({goodsid: goodsid}),
@@ -200,7 +200,7 @@
         if (data != "") {
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:5000/seller/change',
+                url: 'http://192.168.86.16:800/seller/change',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify({type: "description", content: data, goodsid: goodsid}),
@@ -227,7 +227,7 @@
         if (data != "") {
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:5000/seller/change',
+                url: 'http://192.168.86.16:800/seller/change',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify({type: "goodname", content: data, goodsid: goodsid}),
@@ -255,7 +255,7 @@
         if (reg.test(data)) {
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:5000/seller/change',
+                url: 'http://192.168.86.16:800/seller/change',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify({type: "price", content: data, goodsid: goodsid}),

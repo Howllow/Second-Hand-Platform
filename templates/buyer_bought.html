@@ -209,7 +209,7 @@
     $(document).ready(function(){
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/buyer/bought',
+            url: 'http://192.168.86.16:800/buyer/bought',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({}),
@@ -255,7 +255,7 @@
                         var comment = prompt("What you wanna say?");
                         $.ajax({
                             type: 'POST',
-                            url: 'http://localhost:5000/buyer/comment',
+                            url: 'http://192.168.86.16:800/buyer/comment',
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             data: JSON.stringify({goodsid: $(this).parent().attr("id"), comment: comment}),
@@ -276,7 +276,7 @@
                         console.log("return button clicked");
                         $.ajax({
                             type: 'POST',
-                            url: 'http://localhost:5000/buyer/return',
+                            url: 'http://192.168.86.16:800/buyer/return',
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             data: JSON.stringify({goodsid: $(this).parent().attr("id")}),

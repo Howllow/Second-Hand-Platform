@@ -3,8 +3,8 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 myconfig = {
-    'host': '0.tcp.ngrok.io',
-    'port': 11741,
+    'host': 'localhost',
+    'port': 3306,
     'user': 'jj',
     'password': 'gimmemoney',
     'db': 'GMM'

@@ -261,7 +261,7 @@
     $("#tuhao").click(function(){
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/tuhao',
+            url: 'http://192.168.86.16:800/tuhao',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({}),
@@ -321,7 +321,7 @@
         else {
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:5000/similar',
+                url: 'http://192.168.86.16:800/similar',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify({'username': name}),
@@ -387,7 +387,7 @@
     $("#audience").click(function(){
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:5000/audience',
+                url: 'http://192.168.86.16:800/audience',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify({}),
@@ -445,7 +445,7 @@
     $("#hot").click(function(){
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/hot',
+            url: 'http://192.168.86.16:800/hot',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({}),

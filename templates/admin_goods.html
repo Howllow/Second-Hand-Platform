@@ -233,7 +233,7 @@
         var keyword = $("#keyword").val();
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/buyer/goods',
+            url: 'http://192.168.86.16:800/buyer/goods',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({ keyword: keyword, type: category}),
@@ -278,7 +278,7 @@
                     $(".cancel-button").bind("click", function(){
                         $.ajax({
                             type: 'POST',
-                            url: 'http://localhost:5000/cancel',
+                            url: 'http://192.168.86.16:800/cancel',
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             data: JSON.stringify({goodsid:$(this).parent().attr('id')}),

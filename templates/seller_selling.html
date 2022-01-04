@@ -202,7 +202,7 @@
      $(document).ready(function(){
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/seller/selling',
+            url: 'http://192.168.86.16:800/seller/selling',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({}),
@@ -250,7 +250,7 @@
                         console.log($(this).parent().attr("id"));
                         $.ajax({
                             type: 'POST',
-                            url: 'http://localhost:5000/cancel',
+                            url: 'http://192.168.86.16:800/cancel',
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             data: JSON.stringify({goodsid: $(this).parent().attr('id')}),

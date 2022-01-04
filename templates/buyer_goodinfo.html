@@ -183,7 +183,7 @@
         $(".container-info").attr("id", goodsid);
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/buyer/goodinfo',
+            url: 'http://192.168.86.16:800/buyer/goodinfo',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({goodsid: goodsid}),
@@ -212,7 +212,7 @@
         var goodsid = url.split("=")[1];
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/buyer/add',
+            url: 'http://192.168.86.16:800/buyer/add',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({goodsid: goodsid}),

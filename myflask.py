@@ -33,6 +33,7 @@ def login():
 
     elif request.method == 'POST':
         db = POOL.connection()
+        print(request)
         data = request.get_json(force=True)
         log_message = login_user(data, db)
         db.close()
@@ -136,7 +137,7 @@ def buyer_add():
 def buyer_buy():
     if request.method == 'POST':
         data = request.get_json()
-        data['username'] = fl.current_user
+        data['username'] = fl.current_user.username
         db = POOL.connection()
         buy_message = buy_good(data, db)
         db.close()
@@ -441,17 +442,16 @@ def load_user(user_id):
 
 
 def Simple_Run():
-    app.run(host='localhost', threaded=True, debug=False, port='5000')
+    app.run(host='172.27.131.115', port='5000')
 
 def Guni_Run():
     app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        run_type = "simple"
+        run_type = "guni"
     else:
         run_type = sys.argv[1]
-    run_type = "guni"
     if run_type == "simple":
         Simple_Run()
     elif run_type == "guni":

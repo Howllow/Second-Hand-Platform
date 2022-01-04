@@ -148,7 +148,7 @@
         else {
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:5000/seller/sell',
+                url: 'http://192.168.86.16:800/seller/sell',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify({goodname: goodname, price: price, type: type, description: description}),

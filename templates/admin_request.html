@@ -226,7 +226,7 @@
     $(document).ready(function(){
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:5000/admin/request',
+            url: 'http://192.168.86.16:800/admin/request',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({}),
@@ -280,7 +280,7 @@
                         console.log($(this).parent().attr("id"));
                         $.ajax({
                             type: 'POST',
-                            url: 'http://localhost:5000/admin/manage',
+                            url: 'http://192.168.68.16:800/admin/manage',
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             data: JSON.stringify({agree: '1', idrequests: $(this).parent().attr('id')}),
@@ -301,7 +301,7 @@
                         console.log($(this).parent().attr("id"));
                         $.ajax({
                             type: 'POST',
-                            url: 'http://localhost:5000/admin/manage',
+                            url: 'http://192.168.68.16:800/admin/manage',
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             data: JSON.stringify({agree: '0', idrequests: $(this).parent().attr('id')}),
